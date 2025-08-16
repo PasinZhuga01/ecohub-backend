@@ -1,0 +1,13 @@
+{
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"name": "TypeScript: Nodemon Watch and Run",
+			"type": "node",
+			"request": "launch",
+			"runtimeExecutable": "nodemon",
+			"runtimeArgs": ["--exec", "rimraf dist && tsc && node dist/server.js", "--ext", "ts", "--watch", "src"],
+			"console": "integratedTerminal"
+		}
+	]
+}
