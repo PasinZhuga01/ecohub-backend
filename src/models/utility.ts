@@ -18,6 +18,8 @@ export class ModelsUtility<T extends z.ZodType<IdentifiedObject, IdentifiedObjec
 	}
 
 	public async getEntity(data: Partial<z.input<T>>): Promise<z.output<T> | null> {
+		ModelsUtility._assertObjectNotEmpty(data);
+
 		return (await this.getEntities(data, { count: 1 }))[0] ?? null;
 	}
 
@@ -25,6 +27,8 @@ export class ModelsUtility<T extends z.ZodType<IdentifiedObject, IdentifiedObjec
 		data: Partial<z.input<T>>,
 		options: Partial<{ orderKey: keyof z.input<T>; count: number }> = {}
 	): Promise<z.output<T>[]> {
+		ModelsUtility._assertObjectNotEmpty(data);
+
 		const where = ModelsUtility._toSqlClause(data);
 		const values = Object.values(data);
 		const limit = options.count !== undefined && isFinite(options.count) ? 'LIMIT ?' : '';
@@ -44,6 +48,8 @@ export class ModelsUtility<T extends z.ZodType<IdentifiedObject, IdentifiedObjec
 	}
 
 	public async createEntity(data: Pick<z.input<T>, C>): Promise<z.output<T>> {
+		ModelsUtility._assertObjectNotEmpty(data);
+
 		const keys = Object.keys(data).join(', ');
 		const values = Object.values(data);
 		const inserts = new Array(values.length).fill('?').join(', ');
@@ -63,14 +69,20 @@ export class ModelsUtility<T extends z.ZodType<IdentifiedObject, IdentifiedObjec
 		return entity;
 	}
 
-	public async updateEntity(data: Partial<z.input<T>>) {
-		const set = ModelsUtility._toSqlClause(data);
-		const values = Object.values(data);
+	public async updateEntities(filter: Partial<z.input<T>>, data: Partial<z.input<T>>) {
+		ModelsUtility._assertObjectNotEmpty(filter);
+		ModelsUtility._assertObjectNotEmpty(data);
 
-		await db.execute(`UPDATE ${this._tableName} SET ${set}`, values);
+		const set = ModelsUtility._toSqlClause(data);
+		const where = ModelsUtility._toSqlClause(filter);
+		const values = Object.values(data).concat(...Object.values(where));
+
+		await db.execute(`UPDATE ${this._tableName} SET ${set} WHERE ${where}`, values);
 	}
 
-	public async removeEntity(data: Partial<z.input<T>>) {
+	public async removeEntities(data: Partial<z.input<T>>) {
+		ModelsUtility._assertObjectNotEmpty(data);
+
 		const where = ModelsUtility._toSqlClause(data);
 		const values = Object.values(data);
 
@@ -81,5 +93,11 @@ export class ModelsUtility<T extends z.ZodType<IdentifiedObject, IdentifiedObjec
 		return Object.keys(data)
 			.map((key) => `${key} = ?`)
 			.join(' AND ');
+	}
+
+	private static _assertObjectNotEmpty(object: object) {
+		if (Object.keys(object).length === 0) {
+			throw new DatabaseError('Failed to call method - parameters object is empty');
+		}
 	}
 }
