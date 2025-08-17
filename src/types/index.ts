@@ -1,5 +1,3 @@
-type Resource = 'profile' | 'project' | 'currency' | 'market' | 'catalog_item' | 'cart_item';
-
 interface BaseErrorPayload<T extends string = string> {
 	code: T;
 }
@@ -18,4 +16,5 @@ interface RelationsErrorPayload extends BaseErrorPayload<'INVALID_RELATIONS'> {
 	details: { parent: Resource; child: Resource };
 }
 
+export type Resource = 'profile' | 'project' | 'currency' | 'market' | 'catalog_item' | 'cart_item';
 export type ErrorsPayload = EmptyErrorPayload | FormatErrorPayload | ResourceErrorPayload | RelationsErrorPayload;

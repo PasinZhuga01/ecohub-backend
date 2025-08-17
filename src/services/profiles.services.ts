@@ -4,17 +4,15 @@ import jwt from 'jsonwebtoken';
 import { UserObject, IdentifiedObject } from '../models/facade';
 import { getUser, createUser } from '../models/profiles.models';
 import { PayloadError } from '../errors';
-
 import env from '../config/env';
 
-async function getUserOrThrow(login: string): Promise<UserObject> {
-	const user = await getUser(login);
+import { getEntityOrThrow } from './utils';
 
-	if (user === null) {
-		throw new PayloadError({ code: 'NOT_FOUND', details: { resource: 'profile' } });
-	}
+async function getUserOrThrow(id: number): Promise<UserObject>;
+async function getUserOrThrow(login: string): Promise<UserObject>;
 
-	return user;
+async function getUserOrThrow(identifier: number | string): Promise<UserObject> {
+	return await getEntityOrThrow(() => (typeof identifier === 'number' ? getUser(identifier) : getUser(identifier)), 'profile');
 }
 
 async function assertUserNotExist(login: string) {
@@ -45,6 +43,10 @@ async function signJwt(id: number): Promise<string> {
 
 export async function verifyJwt(token: string): Promise<IdentifiedObject> {
 	return jwt.verify(token, env.jwt.secretKey) as IdentifiedObject;
+}
+
+export async function getUserLogin(id: number): Promise<string> {
+	return (await getUserOrThrow(id)).login;
 }
 
 export async function registerUser(login: string, password: string): Promise<string> {
