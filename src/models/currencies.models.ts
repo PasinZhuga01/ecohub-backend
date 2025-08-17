@@ -28,7 +28,7 @@ export async function rerateCurrency(id: number, rate: number) {
 	await utility.updateEntities({ id }, { rate });
 }
 
-export async function remove(id: number) {
+export async function removeCurrency(id: number) {
 	await utility.removeEntities({ id });
 }
 

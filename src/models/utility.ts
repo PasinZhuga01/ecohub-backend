@@ -75,7 +75,7 @@ export class ModelsUtility<T extends z.ZodType<IdentifiedObject, IdentifiedObjec
 
 		const set = ModelsUtility._toSqlClause(data);
 		const where = ModelsUtility._toSqlClause(filter);
-		const values = Object.values(data).concat(...Object.values(where));
+		const values = Object.values(data).concat(...Object.values(filter));
 
 		await db.execute(`UPDATE ${this._tableName} SET ${set} WHERE ${where}`, values);
 	}
