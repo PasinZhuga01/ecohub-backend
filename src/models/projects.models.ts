@@ -27,9 +27,9 @@ export async function createProject(userId: number, name: string): Promise<Proje
 }
 
 export async function renameProject(id: number, name: string) {
-	return await db.execute('UPDATE projects SET name = ? WHERE id = ?', [name, id]);
+	await db.execute('UPDATE projects SET name = ? WHERE id = ?', [name, id]);
 }
 
 export async function removeProject(id: number) {
-	return await db.execute('DELETE FROM projects WHERE id = ?', [id]);
+	await db.execute('DELETE FROM projects WHERE id = ?', [id]);
 }
