@@ -1,7 +1,7 @@
-import { ModelsUtility } from './utility';
+import { ModelsUtility } from '../utility';
 import { currencySchema, CurrencyObject } from './currencies.models.schemas';
 
-import db from '../config/db';
+import db from '../../config/db';
 
 const utility = new ModelsUtility<typeof currencySchema, 'project_id' | 'icon_src' | 'name' | 'rate'>(
 	currencySchema,

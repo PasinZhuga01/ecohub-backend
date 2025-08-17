@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { project as projectBaseSchema } from './facade';
+import { project as projectBaseSchema } from '../facade';
 
 export const projectSchema = projectBaseSchema.transform(({ user_id, interacted_at, ...object }) => ({
 	...object,

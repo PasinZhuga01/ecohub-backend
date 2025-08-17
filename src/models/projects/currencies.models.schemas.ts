@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { currency as currencyBaseSchema } from './facade';
+import { currency as currencyBaseSchema } from '../facade';
 
 export const currencySchema = currencyBaseSchema.transform(({ project_id, icon_src, ...object }) => ({
 	...object,

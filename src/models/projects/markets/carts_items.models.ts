@@ -1,4 +1,4 @@
-import { ModelsUtility } from './utility';
+import { ModelsUtility } from '../../utility';
 import { cartItemSchema, CartItemObject } from './carts_items.models.schemas';
 
 const utility = new ModelsUtility<typeof cartItemSchema, 'market_id' | 'catalog_item_id'>(cartItemSchema, 'carts_items', 'cart item');

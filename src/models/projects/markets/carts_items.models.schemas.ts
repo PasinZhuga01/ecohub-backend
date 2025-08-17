@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { cartItem as cartItemBaseSchema } from './facade';
+import { cartItem as cartItemBaseSchema } from '../../facade';
 
 export const cartItemSchema = cartItemBaseSchema.transform(({ catalog_item_id, market_id, ...object }) => ({
 	...object,

@@ -1,5 +1,5 @@
-import { ModelsUtility } from './utility';
-import { projectSchema, ProjectObject } from './projects.models.schemas';
+import { ModelsUtility } from '../utility';
+import { projectSchema, ProjectObject } from './index.models.schemas';
 
 const utility = new ModelsUtility<typeof projectSchema, 'user_id' | 'name'>(projectSchema, 'projects', 'project');
 
