@@ -1,30 +1,17 @@
 import { UserObject, user as userSchema } from './facade';
+import { ModelsUtility } from './utility';
 
-import { DatabaseError } from '../errors';
-import db from '../config/db';
+const utility = new ModelsUtility(userSchema, 'user');
 
 export async function getUser(id: number): Promise<UserObject | null>;
 export async function getUser(login: string): Promise<UserObject | null>;
 
-export async function getUser(value: number | string) {
+export async function getUser(value: number | string): Promise<UserObject | null> {
 	const key = typeof value === 'number' ? 'id' : 'login';
-	const [rows] = await db.query(`SELECT * FROM users WHERE ${key} = ?`, [value]);
 
-	return Array.isArray(rows) && rows.length > 0 ? userSchema.parse(rows[0]) : null;
+	return await utility.getEntity(`SELECT * FROM users WHERE ${key} = ?`, [value]);
 }
 
 export async function createUser(login: string, password: string): Promise<UserObject> {
-	const [result] = await db.execute('INSERT INTO users (login, password) VALUES (?, ?)', [login, password]);
-
-	if (!('insertId' in result) || typeof result.insertId !== 'number') {
-		throw new DatabaseError('Failed to retrieve created user insertId');
-	}
-
-	const user = await getUser(result.insertId);
-
-	if (user === null) {
-		throw new DatabaseError(`Failed to retrieve created user with id = ${result.insertId}`);
-	}
-
-	return user;
+	return await utility.createEntity('INSERT INTO users (login, password) VALUES (?, ?)', [login, password], getUser);
 }
