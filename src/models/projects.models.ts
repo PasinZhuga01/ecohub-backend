@@ -19,7 +19,7 @@ export async function getProjectsByOrderDesc(userId: number, maxCount?: number):
 	const limit = maxCount !== undefined ? 'LIMIT ?' : '';
 	const values = maxCount !== undefined ? [userId, maxCount] : [userId];
 
-	return utility.getEntities(`SELECT * FROM projects WHERE user_id = ? ORDER BY interacted_at DESC ${limit}`, values);
+	return await utility.getEntities(`SELECT * FROM projects WHERE user_id = ? ORDER BY interacted_at DESC ${limit}`, values);
 }
 
 export async function createProject(userId: number, name: string): Promise<ProjectObject> {

@@ -16,11 +16,11 @@ export async function getCurrency(id: number, name?: string): Promise<CurrencyOb
 }
 
 export async function getCurrencies(projectId: number): Promise<CurrencyObject[]> {
-	return utility.getEntities('SELECT * FROM currencies WHERE project_id = ?', [projectId]);
+	return await utility.getEntities('SELECT * FROM currencies WHERE project_id = ?', [projectId]);
 }
 
 export async function createCurrency(projectId: number, iconSrc: string, name: string, rate: number): Promise<CurrencyObject> {
-	return utility.createEntity(
+	return await utility.createEntity(
 		'INSERT INTO currencies (project_id, icon_src, name, rate) VALUES (?, ?, ?, ?)',
 		[projectId, iconSrc, name, rate],
 		getCurrency
