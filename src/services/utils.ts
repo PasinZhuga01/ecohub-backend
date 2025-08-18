@@ -1,4 +1,4 @@
-import { ErrorsPayload, Resource } from '../types';
+import { ErrorPayload, Resource } from '../types/http';
 import { PayloadError } from '../errors';
 
 export async function getEntityOrThrow<T extends object>(entity: T | null, resource: Resource): Promise<T> {
@@ -9,7 +9,7 @@ export async function getEntityOrThrow<T extends object>(entity: T | null, resou
 	return entity;
 }
 
-export async function assertEntityNotExist(entity: object | null, payload: ErrorsPayload) {
+export async function assertEntityNotExist(entity: object | null, payload: ErrorPayload) {
 	if (entity !== null) {
 		throw new PayloadError(payload);
 	}

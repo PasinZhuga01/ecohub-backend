@@ -1,4 +1,4 @@
-import { ErrorsPayload } from '../types';
+import { ErrorPayload } from '../types/http';
 
 abstract class BaseError extends Error {
 	protected constructor(name: string, message: string) {
@@ -13,7 +13,7 @@ export class DatabaseError extends BaseError {
 	}
 }
 
-export class PayloadError<T extends ErrorsPayload> extends BaseError {
+export class PayloadError<T extends ErrorPayload> extends BaseError {
 	public readonly payload: T;
 
 	public constructor(payload: T) {

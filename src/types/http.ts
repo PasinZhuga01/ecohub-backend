@@ -1,4 +1,6 @@
-interface BaseErrorPayload<T extends string = string> {
+import { ErrorCodes } from '../constants/http';
+
+interface BaseErrorPayload<T extends keyof typeof ErrorCodes> {
 	code: T;
 }
 
@@ -17,4 +19,6 @@ interface RelationsErrorPayload extends BaseErrorPayload<'INVALID_RELATIONS'> {
 }
 
 export type Resource = 'profile' | 'project' | 'currency' | 'market' | 'catalog_item' | 'cart_item';
-export type ErrorsPayload = EmptyErrorPayload | FormatErrorPayload | ResourceErrorPayload | RelationsErrorPayload;
+
+export type ErrorPayload = EmptyErrorPayload | FormatErrorPayload | ResourceErrorPayload | RelationsErrorPayload;
+export type ErrorResponse = { status: (typeof ErrorCodes)[keyof typeof ErrorCodes] } & ErrorPayload;
