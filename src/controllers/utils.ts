@@ -2,10 +2,11 @@ import { Response } from 'express';
 
 import { PayloadError } from '../errors';
 import { ErrorCodes } from '../constants/http';
+import { ErrorPayload } from '../types/http';
 
-export async function safePayload(res: Response, callback: () => Promise<void>) {
+export async function safePayload<T extends object>(res: Response<T | ErrorPayload>, callback: () => Promise<T>) {
 	try {
-		await callback();
+		res.json(await callback());
 	} catch (error) {
 		if (!(error instanceof PayloadError)) {
 			throw error;
