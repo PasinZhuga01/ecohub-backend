@@ -1,7 +1,9 @@
-import { z } from 'zod';
+import { pickObject } from '../../utils';
 
-import { catalogItemSchema as catalogItemBaseSchema } from '../../../models/projects/markets/catalogs_items.models.schemas';
+import { CatalogItemObject as CatalogItemBaseObject } from '../../../models/projects/markets/catalogs_items.models.schemas';
 
-export const catalogItemSchema = catalogItemBaseSchema.transform(({ id, name, count, price }) => ({ id, name, count, price }));
+export type CatalogItemObject = Pick<CatalogItemBaseObject, 'id' | 'name' | 'count' | 'price'>;
 
-export type CatalogItemObject = z.output<typeof catalogItemSchema>;
+export function toCatalogItemObject(object: CatalogItemBaseObject): CatalogItemObject {
+	return pickObject(object, ['id', 'name', 'count', 'price']);
+}

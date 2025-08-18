@@ -2,7 +2,7 @@ import fs from 'fs/promises';
 import path from 'path';
 import { v4 as uuidv4 } from 'uuid';
 
-import { currencySchema, CurrencyObject } from './currencies.services.schemas';
+import { toCurrencyObject, CurrencyObject } from './currencies.services.schemas';
 import { assertUserAccessToProject } from './index.services';
 import { getMarketsForPage } from './markets/index.services';
 import { shiftItemsPrices } from './markets/catalogs_items.services';
@@ -36,7 +36,7 @@ export async function assertUserAccessToCurrency(userId: number, currencyId: num
 export async function getCurrencies(userId: number, projectId: number): Promise<CurrencyObject[]> {
 	await assertUserAccessToProject(userId, projectId);
 
-	return (await getCurrenciesModel(projectId)).map((currency) => currencySchema.parse(currency));
+	return (await getCurrenciesModel(projectId)).map((currency) => toCurrencyObject(currency));
 }
 
 export async function createCurrency(
@@ -51,7 +51,7 @@ export async function createCurrency(
 
 	const iconSrc = await saveIcon(icon);
 
-	return currencySchema.parse(await createCurrencyModel(projectId, iconSrc, name, rate));
+	return toCurrencyObject(await createCurrencyModel(projectId, iconSrc, name, rate));
 }
 
 export async function rerateCurrency(userId: number, currencyId: number, rate: number): Promise<number> {

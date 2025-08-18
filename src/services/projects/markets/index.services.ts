@@ -1,4 +1,4 @@
-import { marketNavSchema, marketPageSchema, MarketNavObject, MarketPageObject } from './index.services.schemas';
+import { toMarketNavObject, toMarketPageObject, MarketNavObject, MarketPageObject } from './index.services.schemas';
 
 import { assertUserAccessToProject } from '../index.services';
 
@@ -28,20 +28,20 @@ export async function assertUserAccessToMarket(userId: number, marketId: number)
 export async function getMarketsForNav(userId: number, projectId: number, maxCount: number): Promise<MarketNavObject[]> {
 	await assertUserAccessToProject(userId, projectId);
 
-	return (await getMarketsByOrderDesc(projectId, maxCount)).map((market) => marketNavSchema.parse(market));
+	return (await getMarketsByOrderDesc(projectId, maxCount)).map((market) => toMarketNavObject(market));
 }
 
 export async function getMarketsForPage(userId: number, projectId: number): Promise<MarketPageObject[]> {
 	await assertUserAccessToProject(userId, projectId);
 
-	return (await getMarketsByOrderDesc(projectId)).map((market) => marketPageSchema.parse(market));
+	return (await getMarketsByOrderDesc(projectId)).map((market) => toMarketPageObject(market));
 }
 
 export async function createMarket(userId: number, projectId: number, name: string): Promise<MarketPageObject> {
 	await assertUserAccessToProject(userId, projectId);
 	await assertMarketNotExist(projectId, name);
 
-	return marketPageSchema.parse(await createMarketModel(projectId, name));
+	return toMarketPageObject(await createMarketModel(projectId, name));
 }
 
 export async function renameMarket(userId: number, marketId: number, name: string): Promise<string> {

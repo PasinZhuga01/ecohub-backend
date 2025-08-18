@@ -1,9 +1,14 @@
-import { z } from 'zod';
+import { pickObject } from '../../utils';
 
-import { marketSchema as marketBaseSchema } from '../../../models/projects/markets/index.models.schemas';
+import { MarketObject as MarketBaseObject } from '../../../models/projects/markets/index.models.schemas';
 
-export const marketNavSchema = marketBaseSchema.transform(({ id, name }) => ({ id, name }));
-export const marketPageSchema = marketBaseSchema.transform(({ id, name, interactedAt }) => ({ id, name, interactedAt }));
+export type MarketNavObject = Pick<MarketBaseObject, 'id' | 'name'>;
+export type MarketPageObject = Pick<MarketBaseObject, 'id' | 'name' | 'interactedAt'>;
 
-export type MarketNavObject = z.output<typeof marketNavSchema>;
-export type MarketPageObject = z.output<typeof marketPageSchema>;
+export function toMarketNavObject(object: MarketBaseObject): MarketNavObject {
+	return pickObject(object, ['id', 'name']);
+}
+
+export function toMarketPageObject(object: MarketBaseObject): MarketPageObject {
+	return pickObject(object, ['id', 'name', 'interactedAt']);
+}

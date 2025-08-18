@@ -1,4 +1,4 @@
-import { cartItemSchema, CartItemObject } from './carts_items.services.schemas';
+import { toCartItemObject, CartItemObject } from './carts_items.services.schemas';
 import { assertMarketAccessToItem } from './catalogs_items.services';
 import { assertUserAccessToMarket } from './index.services';
 
@@ -25,7 +25,7 @@ export async function assertUserAccessToItem(userId: number, itemId: number) {
 export async function getItems(userId: number, marketId: number): Promise<CartItemObject[]> {
 	await assertUserAccessToMarket(userId, marketId);
 
-	return (await getItemsModel(marketId)).map((item) => cartItemSchema.parse(item));
+	return (await getItemsModel(marketId)).map((item) => toCartItemObject(item));
 }
 
 export async function addItem(userId: number, marketId: number, catalogItemId: number): Promise<CartItemObject> {
@@ -37,10 +37,10 @@ export async function addItem(userId: number, marketId: number, catalogItemId: n
 	if (item !== null) {
 		await recountItem(userId, item.id, item.count + 1);
 
-		return cartItemSchema.parse(await getItemOrThrow(item.id));
+		return toCartItemObject(await getItemOrThrow(item.id));
 	}
 
-	return cartItemSchema.parse(await createItemModel(marketId, catalogItemId));
+	return toCartItemObject(await createItemModel(marketId, catalogItemId));
 }
 
 export async function recountItem(userId: number, itemId: number, count: number): Promise<number> {

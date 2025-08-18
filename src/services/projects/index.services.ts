@@ -1,4 +1,4 @@
-import { projectNavSchema, projectPageSchema, ProjectNavObject, ProjectPageObject } from './index.services.schemas';
+import { toProjectNavObject, toProjectPageObject, ProjectNavObject, ProjectPageObject } from './index.services.schemas';
 import { getMarketsForNav } from './markets/index.services';
 
 import { getEntityOrThrow, assertEntityNotExist } from '../utils';
@@ -6,6 +6,7 @@ import { getEntityOrThrow, assertEntityNotExist } from '../utils';
 import {
 	getProject,
 	getProjectsByOrderDesc,
+	createProject as createProjectModel,
 	renameProject as renameProjectModel,
 	removeProject as removeProjectModel
 } from '../../models/projects/index.models';
@@ -27,7 +28,7 @@ export async function assertUserAccessToProject(userId: number, projectId: numbe
 }
 
 export async function getProjectsForNav(userId: number, maxCount: number): Promise<ProjectNavObject[]> {
-	const projects = (await getProjectsByOrderDesc(userId, maxCount)).map((project) => projectNavSchema.parse(project));
+	const projects = (await getProjectsByOrderDesc(userId, maxCount)).map((project) => toProjectNavObject(project));
 
 	for (const project of projects) {
 		project.markets = project.markets.concat(await getMarketsForNav(userId, project.id, maxCount));
@@ -37,13 +38,13 @@ export async function getProjectsForNav(userId: number, maxCount: number): Promi
 }
 
 export async function getProjectsForPage(userId: number): Promise<ProjectPageObject[]> {
-	return (await getProjectsByOrderDesc(userId)).map((project) => projectPageSchema.parse(project));
+	return (await getProjectsByOrderDesc(userId)).map((project) => toProjectPageObject(project));
 }
 
 export async function createProject(userId: number, name: string): Promise<ProjectPageObject> {
 	await assertProjectNotExist(userId, name);
 
-	return projectPageSchema.parse(await createProject(userId, name));
+	return toProjectPageObject(await createProjectModel(userId, name));
 }
 
 export async function renameProject(userId: number, projectId: number, name: string): Promise<string> {

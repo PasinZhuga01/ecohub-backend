@@ -1,7 +1,9 @@
-import { z } from 'zod';
+import { pickObject } from '../utils';
 
-import { currencySchema as currencyBaseSchema } from '../../models/projects/currencies.models.schemas';
+import { CurrencyObject as CurrencyBaseObject } from '../../models/projects/currencies.models.schemas';
 
-export const currencySchema = currencyBaseSchema.transform(({ id, iconSrc, name, rate }) => ({ id, iconSrc, name, rate }));
+export type CurrencyObject = Pick<CurrencyBaseObject, 'id' | 'iconSrc' | 'name' | 'rate'>;
 
-export type CurrencyObject = z.output<typeof currencySchema>;
+export function toCurrencyObject(object: CurrencyBaseObject): CurrencyObject {
+	return pickObject(object, ['id', 'iconSrc', 'name', 'rate']);
+}

@@ -14,3 +14,13 @@ export async function assertEntityNotExist(entity: object | null, payload: Error
 		throw new PayloadError(payload);
 	}
 }
+
+export function pickObject<T extends object, K extends keyof T>(object: T, keys: K[]): Pick<T, K> {
+	const result: Partial<Pick<T, K>> = {};
+
+	for (const key of keys) {
+		result[key] = object[key];
+	}
+
+	return result as Pick<T, K>;
+}

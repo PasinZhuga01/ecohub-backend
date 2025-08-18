@@ -1,4 +1,4 @@
-import { catalogItemSchema, CatalogItemObject } from './catalogs_items.services.schemas';
+import { toCatalogItemObject, CatalogItemObject } from './catalogs_items.services.schemas';
 import { assertUserAccessToMarket } from './index.services';
 
 import { getEntityOrThrow, assertEntityNotExist } from '../../utils';
@@ -35,14 +35,14 @@ export async function assertMarketAccessToItem(marketId: number, itemId: number)
 export async function getItems(userId: number, marketId: number): Promise<CatalogItemObject[]> {
 	await assertUserAccessToMarket(userId, marketId);
 
-	return (await getItemsModel(marketId)).map((item) => catalogItemSchema.parse(item));
+	return (await getItemsModel(marketId)).map((item) => toCatalogItemObject(item));
 }
 
 export async function createItem(userId: number, marketId: number, name: string, count: number, price: number): Promise<CatalogItemObject> {
 	await assertUserAccessToMarket(userId, marketId);
 	await assertItemNotExist(marketId, name);
 
-	return catalogItemSchema.parse(await createItemModel(marketId, name, count, price));
+	return toCatalogItemObject(await createItemModel(marketId, name, count, price));
 }
 
 export async function editItem(userId: number, itemId: number, component: 'count' | 'price', value: number): Promise<number> {
