@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { currencySchema, CurrencyObject } from './currencies.services.schemas';
 import { assertUserAccessToProject } from './index.services';
+import { shiftItemsPrices } from './markets/catalogs_items.services';
 
 import { getEntityOrThrow, assertEntityNotExist } from '../utils';
 
@@ -18,6 +19,7 @@ import {
 import { CurrencyObject as CurrencyObjectModel } from '../../models/projects/currencies.models.schemas';
 
 import env from '../../config/env';
+import { getMarketsForPage } from './markets/index.services';
 
 export async function getCurrencyOrThrow(id: number): Promise<CurrencyObjectModel> {
 	return await getEntityOrThrow(await getCurrency(id), 'currency');
@@ -69,6 +71,10 @@ export async function removeCurrency(userId: number, currencyId: number): Promis
 export async function shiftCurrenciesRates(userId: number, projectId: number, value: number): Promise<boolean> {
 	await assertUserAccessToProject(userId, projectId);
 	await shiftCurrenciesRatesModel(projectId, value);
+
+	for (const market of await getMarketsForPage(userId, projectId)) {
+		await shiftItemsPrices(userId, market.id, value);
+	}
 
 	return true;
 }

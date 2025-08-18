@@ -3,8 +3,11 @@ import { cartItemSchema, CartItemObject } from './carts_items.models.schemas';
 
 const utility = new ModelsUtility<typeof cartItemSchema, 'market_id' | 'catalog_item_id'>(cartItemSchema, 'carts_items', 'cart item');
 
-export async function getItem(id: number): Promise<CartItemObject | null> {
-	return await utility.getEntity({ id });
+export async function getItem(id: number): Promise<CartItemObject | null>;
+export async function getItem(marketId: number, catalogItemId: number): Promise<CartItemObject | null>;
+
+export async function getItem(id: number, catalogItemId?: number): Promise<CartItemObject | null> {
+	return await utility.getEntity(catalogItemId !== undefined ? { market_id: id, catalog_item_id: catalogItemId } : { id });
 }
 
 export async function getItems(marketId: number): Promise<CartItemObject[]> {
