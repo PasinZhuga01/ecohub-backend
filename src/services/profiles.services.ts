@@ -12,7 +12,7 @@ async function getUserOrThrow(id: number): Promise<UserObject>;
 async function getUserOrThrow(login: string): Promise<UserObject>;
 
 async function getUserOrThrow(identifier: number | string): Promise<UserObject> {
-	return await getEntityOrThrow(() => (typeof identifier === 'number' ? getUser(identifier) : getUser(identifier)), 'profile');
+	return await getEntityOrThrow(await (typeof identifier === 'number' ? getUser(identifier) : getUser(identifier)), 'profile');
 }
 
 async function assertUserNotExist(login: string) {

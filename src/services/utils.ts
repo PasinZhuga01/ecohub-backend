@@ -1,9 +1,7 @@
 import { ErrorsPayload, Resource } from '../types';
 import { PayloadError } from '../errors';
 
-export async function getEntityOrThrow<T extends object>(callback: () => Promise<T | null>, resource: Resource): Promise<T> {
-	const entity = await callback();
-
+export async function getEntityOrThrow<T extends object>(entity: T | null, resource: Resource): Promise<T> {
 	if (entity === null) {
 		throw new PayloadError({ code: 'NOT_FOUND', details: { resource } });
 	}
@@ -11,8 +9,8 @@ export async function getEntityOrThrow<T extends object>(callback: () => Promise
 	return entity;
 }
 
-export async function assertEntityNotExist(target: object | null, payload: ErrorsPayload) {
-	if (target !== null) {
+export async function assertEntityNotExist(entity: object | null, payload: ErrorsPayload) {
+	if (entity !== null) {
 		throw new PayloadError(payload);
 	}
 }
