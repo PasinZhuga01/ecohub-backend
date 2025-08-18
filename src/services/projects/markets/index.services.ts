@@ -39,12 +39,14 @@ export async function getMarketsForPage(userId: number, projectId: number): Prom
 
 export async function createMarket(userId: number, projectId: number, name: string): Promise<MarketPageObject> {
 	await assertUserAccessToProject(userId, projectId);
+	await assertMarketNotExist(projectId, name);
 
 	return marketPageSchema.parse(await createMarketModel(projectId, name));
 }
 
 export async function renameMarket(userId: number, marketId: number, name: string): Promise<string> {
 	await assertUserAccessToMarket(userId, marketId);
+	await assertMarketNotExist((await getMarketOrThrow(marketId)).projectId, name);
 	await renameMarketModel(marketId, name);
 
 	return name;

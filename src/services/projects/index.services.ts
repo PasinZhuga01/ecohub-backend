@@ -48,6 +48,7 @@ export async function createProject(userId: number, name: string): Promise<Proje
 
 export async function renameProject(userId: number, projectId: number, name: string): Promise<string> {
 	await assertUserAccessToProject(userId, projectId);
+	await assertProjectNotExist(userId, name);
 	await renameProjectModel(projectId, name);
 
 	return name;
