@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { currencySchema, CurrencyObject } from './currencies.services.schemas';
 import { assertUserAccessToProject } from './index.services';
+import { getMarketsForPage } from './markets/index.services';
 import { shiftItemsPrices } from './markets/catalogs_items.services';
 
 import { getEntityOrThrow, assertEntityNotExist } from '../utils';
@@ -19,7 +20,6 @@ import {
 import { CurrencyObject as CurrencyObjectModel } from '../../models/projects/currencies.models.schemas';
 
 import env from '../../config/env';
-import { getMarketsForPage } from './markets/index.services';
 
 export async function getCurrencyOrThrow(id: number): Promise<CurrencyObjectModel> {
 	return await getEntityOrThrow(await getCurrency(id), 'currency');

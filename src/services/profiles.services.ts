@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 
 import { getEntityOrThrow, assertEntityNotExist } from './utils';
 
-import { UserObject, IdentifiedObject } from '../models/facade';
+import { UserObject } from '../models/facade';
 import { getUser, createUser } from '../models/profiles.models';
 import { PayloadError } from '../errors';
 import env from '../config/env';
@@ -37,10 +37,6 @@ async function verifyPassword(password: string, hash: string): Promise<boolean> 
 
 async function signJwt(id: number): Promise<string> {
 	return jwt.sign({ id }, env.jwt.secretKey, { expiresIn: env.jwt.expiresIn });
-}
-
-export async function verifyJwt(token: string): Promise<IdentifiedObject> {
-	return jwt.verify(token, env.jwt.secretKey) as IdentifiedObject;
 }
 
 export async function getUserLogin(id: number): Promise<string> {
