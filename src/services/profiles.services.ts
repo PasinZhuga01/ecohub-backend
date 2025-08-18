@@ -1,12 +1,12 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
+import { getEntityOrThrow, assertEntityNotExist } from './utils';
+
 import { UserObject, IdentifiedObject } from '../models/facade';
 import { getUser, createUser } from '../models/profiles.models';
 import { PayloadError } from '../errors';
 import env from '../config/env';
-
-import { getEntityOrThrow } from './utils';
 
 async function getUserOrThrow(id: number): Promise<UserObject>;
 async function getUserOrThrow(login: string): Promise<UserObject>;
@@ -16,9 +16,7 @@ async function getUserOrThrow(identifier: number | string): Promise<UserObject> 
 }
 
 async function assertUserNotExist(login: string) {
-	if ((await getUser(login)) !== null) {
-		throw new PayloadError({ code: 'LOGIN_TAKEN' });
-	}
+	await assertEntityNotExist(await getUser(login), { code: 'LOGIN_TAKEN' });
 }
 
 async function assertUserCredentials(login: string, password: string) {
