@@ -13,10 +13,10 @@ export class DatabaseError extends BaseError {
 	}
 }
 
-export class PayloadError<T extends ErrorPayload> extends BaseError {
-	public readonly payload: T;
+export class PayloadError extends BaseError {
+	public readonly payload: ErrorPayload;
 
-	public constructor(payload: T) {
+	public constructor(payload: ErrorPayload) {
 		super('PayloadError', '');
 		this.payload = payload;
 	}
