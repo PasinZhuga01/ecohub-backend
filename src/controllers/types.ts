@@ -3,4 +3,6 @@ import { Request as ExpressRequest, Response as ExpressResponse } from 'express'
 import { ErrorPayload } from '../types/http';
 
 export type Request<B extends object> = ExpressRequest<{}, {}, B>;
-export type Response<B extends object> = ExpressResponse<B | ErrorPayload>;
+
+export type Response<B extends object, L extends object = object> = ExpressResponse<B | ErrorPayload, L>;
+export type ResponseWithSession<B extends object> = Response<B, { userId: number }>;
