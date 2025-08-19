@@ -52,14 +52,14 @@ export async function editItem(userId: number, itemId: number, component: 'count
 	return value;
 }
 
-export async function removeItem(userId: number, itemId: number): Promise<boolean> {
+export async function removeItem(userId: number, itemId: number): Promise<true> {
 	await assertUserAccessToItem(userId, itemId);
 	await removeItemModel(itemId);
 
 	return true;
 }
 
-export async function shiftItemsPrices(userId: number, marketId: number, value: number): Promise<boolean> {
+export async function shiftItemsPrices(userId: number, marketId: number, value: number): Promise<true> {
 	await assertUserAccessToMarket(userId, marketId);
 	await shiftItemsPricesModel(marketId, value);
 

@@ -61,14 +61,14 @@ export async function rerateCurrency(userId: number, currencyId: number, rate: n
 	return rate;
 }
 
-export async function removeCurrency(userId: number, currencyId: number): Promise<boolean> {
+export async function removeCurrency(userId: number, currencyId: number): Promise<true> {
 	await assertUserAccessToCurrency(userId, currencyId);
 	await removeCurrencyModel(currencyId);
 
 	return true;
 }
 
-export async function shiftCurrenciesRates(userId: number, projectId: number, value: number): Promise<boolean> {
+export async function shiftCurrenciesRates(userId: number, projectId: number, value: number): Promise<true> {
 	await assertUserAccessToProject(userId, projectId);
 	await shiftCurrenciesRatesModel(projectId, value);
 

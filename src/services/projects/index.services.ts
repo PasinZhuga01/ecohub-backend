@@ -55,7 +55,7 @@ export async function renameProject(userId: number, projectId: number, name: str
 	return name;
 }
 
-export async function removeProject(userId: number, projectId: number): Promise<boolean> {
+export async function removeProject(userId: number, projectId: number): Promise<true> {
 	await assertUserAccessToProject(userId, projectId);
 	await removeProjectModel(projectId);
 

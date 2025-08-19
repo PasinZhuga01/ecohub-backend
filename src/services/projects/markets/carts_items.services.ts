@@ -50,14 +50,14 @@ export async function recountItem(userId: number, itemId: number, count: number)
 	return count;
 }
 
-export async function removeItem(userId: number, itemId: number): Promise<boolean> {
+export async function removeItem(userId: number, itemId: number): Promise<true> {
 	await assertUserAccessToItem(userId, itemId);
 	await removeItemModel(itemId);
 
 	return true;
 }
 
-export async function clearItems(userId: number, marketId: number): Promise<boolean> {
+export async function clearItems(userId: number, marketId: number): Promise<true> {
 	await assertUserAccessToMarket(userId, marketId);
 	await clearItemsModel(marketId);
 

@@ -52,7 +52,7 @@ export async function renameMarket(userId: number, marketId: number, name: strin
 	return name;
 }
 
-export async function removeMarket(userId: number, marketId: number): Promise<boolean> {
+export async function removeMarket(userId: number, marketId: number): Promise<true> {
 	await assertUserAccessToMarket(userId, marketId);
 	await removeMarketModel(marketId);
 
