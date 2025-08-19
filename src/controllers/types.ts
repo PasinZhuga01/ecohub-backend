@@ -3,6 +3,7 @@ import { Request as ExpressRequest, Response as ExpressResponse } from 'express'
 import { ErrorPayload } from '../types/http';
 
 export type Request<B extends object> = ExpressRequest<{}, {}, B>;
+export type RequestWithFile<B extends object> = Request<B> & { file: Express.Multer.File };
 
 export type Response<B extends object, L extends object = object> = ExpressResponse<B | ErrorPayload, L>;
 export type ResponseWithSession<B extends object> = Response<B, { userId: number }>;
