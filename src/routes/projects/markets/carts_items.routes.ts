@@ -2,7 +2,7 @@ import { Router } from 'express';
 
 import { CartsItems as Schemas } from '../../facade';
 
-import { createRequestBodySchemaValidator, verifySessionToken as verifySessionTokenMiddleware } from '../../../middlewares';
+import { createRequestSchemaValidator, verifySessionToken as verifySessionTokenMiddleware } from '../../../middlewares';
 import {
 	get as getController,
 	add as addController,
@@ -13,10 +13,10 @@ import {
 
 const router = Router();
 
-router.get('/get', createRequestBodySchemaValidator(Schemas.get), verifySessionTokenMiddleware, getController);
-router.post('/add', createRequestBodySchemaValidator(Schemas.add), verifySessionTokenMiddleware, addController);
-router.patch('/recount', createRequestBodySchemaValidator(Schemas.recount), verifySessionTokenMiddleware, recountController);
-router.delete('/remove', createRequestBodySchemaValidator(Schemas.remove), verifySessionTokenMiddleware, removeController);
-router.delete('/clear', createRequestBodySchemaValidator(Schemas.clear), verifySessionTokenMiddleware, clearController);
+router.get('/get', createRequestSchemaValidator(Schemas.get), verifySessionTokenMiddleware, getController);
+router.post('/add', createRequestSchemaValidator(Schemas.add), verifySessionTokenMiddleware, addController);
+router.patch('/recount', createRequestSchemaValidator(Schemas.recount), verifySessionTokenMiddleware, recountController);
+router.delete('/remove', createRequestSchemaValidator(Schemas.remove), verifySessionTokenMiddleware, removeController);
+router.delete('/clear', createRequestSchemaValidator(Schemas.clear), verifySessionTokenMiddleware, clearController);
 
 export default router;

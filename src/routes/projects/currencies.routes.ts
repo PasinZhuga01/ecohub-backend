@@ -2,7 +2,7 @@ import { Router } from 'express';
 
 import { Currencies as Schemas } from '../facade';
 
-import { createRequestBodySchemaValidator, verifySessionToken as verifySessionTokenMiddleware } from '../../middlewares';
+import { createRequestSchemaValidator, verifySessionToken as verifySessionTokenMiddleware } from '../../middlewares';
 import {
 	get as getController,
 	create as createController,
@@ -14,16 +14,10 @@ import multer from '../../config/multer';
 
 const router = Router();
 
-router.get('/get', createRequestBodySchemaValidator(Schemas.get), verifySessionTokenMiddleware, getController);
-router.post(
-	'/create',
-	multer.single('icon'),
-	createRequestBodySchemaValidator(Schemas.create),
-	verifySessionTokenMiddleware,
-	createController
-);
-router.patch('/rerate', createRequestBodySchemaValidator(Schemas.rerate), verifySessionTokenMiddleware, rerateController);
-router.delete('/remove', createRequestBodySchemaValidator(Schemas.remove), verifySessionTokenMiddleware, removeController);
-router.patch('/shift', createRequestBodySchemaValidator(Schemas.shift), verifySessionTokenMiddleware, shiftController);
+router.get('/get', createRequestSchemaValidator(Schemas.get), verifySessionTokenMiddleware, getController);
+router.post('/create', multer.single('icon'), createRequestSchemaValidator(Schemas.create), verifySessionTokenMiddleware, createController);
+router.patch('/rerate', createRequestSchemaValidator(Schemas.rerate), verifySessionTokenMiddleware, rerateController);
+router.delete('/remove', createRequestSchemaValidator(Schemas.remove), verifySessionTokenMiddleware, removeController);
+router.patch('/shift', createRequestSchemaValidator(Schemas.shift), verifySessionTokenMiddleware, shiftController);
 
 export default router;
