@@ -20,7 +20,7 @@ export function createRequestSchemaValidator(schema: z.ZodType, isFromQueryToBod
 		}
 
 		if (isFromQueryToBody) {
-			req.body = result;
+			req.body = result.data;
 		}
 
 		return next();

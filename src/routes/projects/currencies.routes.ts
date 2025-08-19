@@ -3,6 +3,7 @@ import { Router } from 'express';
 import { Currencies as Schemas } from '../facade';
 
 import { createRequestSchemaValidator, verifySessionToken as verifySessionTokenMiddleware } from '../../middlewares';
+import { getCurrencies as getCurrenciesQuerySchema } from '../../middlewares/schemas';
 import {
 	get as getController,
 	create as createController,
@@ -14,7 +15,13 @@ import multer from '../../config/multer';
 
 const router = Router();
 
-router.get('/get', createRequestSchemaValidator(Schemas.get), verifySessionTokenMiddleware, getController);
+router.get(
+	'/get',
+	createRequestSchemaValidator(getCurrenciesQuerySchema, true),
+	createRequestSchemaValidator(Schemas.get),
+	verifySessionTokenMiddleware,
+	getController
+);
 router.post('/create', multer.single('icon'), createRequestSchemaValidator(Schemas.create), verifySessionTokenMiddleware, createController);
 router.patch('/rerate', createRequestSchemaValidator(Schemas.rerate), verifySessionTokenMiddleware, rerateController);
 router.delete('/remove', createRequestSchemaValidator(Schemas.remove), verifySessionTokenMiddleware, removeController);
