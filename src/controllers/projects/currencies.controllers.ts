@@ -1,5 +1,5 @@
 import { safePayload } from '../utils';
-import { Request, RequestWithFile, ResponseWithSession } from '../types';
+import { Request, ResponseWithSession } from '../types';
 import { Currencies as Requests } from '../facade/requests';
 import { Currencies as Responses } from '../facade/responses';
 
@@ -15,8 +15,11 @@ export async function get(req: Request<Requests.GetRequest>, res: ResponseWithSe
 	await safePayload(res, async () => await getCurrencies(res.locals.userId, req.body.projectId));
 }
 
-export async function create(req: RequestWithFile<Requests.CreateRequest>, res: ResponseWithSession<Responses.CreateResponse>) {
-	await safePayload(res, async () => await createCurrency(res.locals.userId, req.body.projectId, req.file, req.body.name, req.body.rate));
+export async function create(req: Request<Requests.CreateRequest>, res: ResponseWithSession<Responses.CreateResponse>) {
+	await safePayload(
+		res,
+		async () => await createCurrency(res.locals.userId, req.body.projectId, req.file!, req.body.name, req.body.rate)
+	);
 }
 
 export async function rerate(req: Request<Requests.RerateRequest>, res: ResponseWithSession<Responses.RerateResponse>) {
