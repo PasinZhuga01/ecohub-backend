@@ -10,5 +10,6 @@ app.use(express.json());
 app.use(cors({ origin: env.clientUrl }));
 
 app.use('/', router);
+app.use('/images', express.static(env.uploadsUrl));
 
 export default app;
