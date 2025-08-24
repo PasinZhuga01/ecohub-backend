@@ -6,9 +6,13 @@ import { ErrorCodes } from '../constants/http';
 import { ErrorPayload } from '../types/http';
 import env from '../config/env';
 
-export function createRequestSchemaValidator(schema: z.ZodType, isFromQueryToBody: boolean = false): RequestHandler<{}, ErrorPayload> {
+export function createRequestSchemaValidator(
+	schema: z.ZodType,
+	isFromQuery: boolean = false,
+	isUpdateBody?: boolean
+): RequestHandler<{}, ErrorPayload> {
 	return async function (req, res, next) {
-		const result = await schema.safeParseAsync(isFromQueryToBody ? req.query : req.body);
+		const result = await schema.safeParseAsync(isFromQuery ? req.query : req.body);
 
 		if (!result.success) {
 			const targets = result.error.issues.map((error) => ({
@@ -19,7 +23,7 @@ export function createRequestSchemaValidator(schema: z.ZodType, isFromQueryToBod
 			return res.status(ErrorCodes['INVALID_FORMAT']).json({ code: 'INVALID_FORMAT', details: { targets } });
 		}
 
-		if (isFromQueryToBody) {
+		if ((isFromQuery && isUpdateBody === undefined) || isUpdateBody) {
 			req.body = result.data;
 		}
 

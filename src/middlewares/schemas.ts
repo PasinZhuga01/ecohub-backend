@@ -41,3 +41,11 @@ export const clearCartsItems = z
 		marketId: z.string()
 	})
 	.transform(({ marketId }) => ({ marketId: Number(marketId) }));
+
+export const createCurrency = z
+	.object({
+		projectId: z.string(),
+		name: z.string(),
+		rate: z.string()
+	})
+	.transform(({ projectId, rate, ...object }) => ({ ...object, projectId: Number(projectId), rate: Number(rate) }));
