@@ -3,7 +3,7 @@ import { Router } from 'express';
 import { Currencies as Schemas } from '../facade';
 
 import { createRequestSchemaValidator, verifySessionToken as verifySessionTokenMiddleware } from '../../middlewares';
-import { getCurrencies as getCurrenciesQuerySchema } from '../../middlewares/schemas';
+import { getCurrencies as getCurrenciesQuerySchema, removeEntity } from '../../middlewares/schemas';
 import {
 	get as getController,
 	create as createController,
@@ -24,7 +24,13 @@ router.get(
 );
 router.post('/create', multer.single('icon'), createRequestSchemaValidator(Schemas.create), verifySessionTokenMiddleware, createController);
 router.patch('/rerate', createRequestSchemaValidator(Schemas.rerate), verifySessionTokenMiddleware, rerateController);
-router.delete('/remove', createRequestSchemaValidator(Schemas.remove), verifySessionTokenMiddleware, removeController);
+router.delete(
+	'/remove',
+	createRequestSchemaValidator(removeEntity, true),
+	createRequestSchemaValidator(Schemas.remove),
+	verifySessionTokenMiddleware,
+	removeController
+);
 router.patch('/shift', createRequestSchemaValidator(Schemas.shift), verifySessionTokenMiddleware, shiftController);
 
 export default router;

@@ -29,3 +29,15 @@ export const getCartsItems = z
 		marketId: z.string()
 	})
 	.transform(({ marketId }) => ({ marketId: Number(marketId) }));
+
+export const removeEntity = z
+	.object({
+		id: z.string()
+	})
+	.transform(({ id }) => ({ id: Number(id) }));
+
+export const clearCartsItems = z
+	.object({
+		marketId: z.string()
+	})
+	.transform(({ marketId }) => ({ marketId: Number(marketId) }));

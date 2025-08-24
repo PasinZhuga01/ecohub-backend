@@ -3,7 +3,7 @@ import { Router } from 'express';
 import { Projects as Schemas } from '../facade';
 
 import { createRequestSchemaValidator, verifySessionToken as verifySessionTokenMiddleware } from '../../middlewares';
-import { getNavProjects as getNavProjectsQuerySchema } from '../../middlewares/schemas';
+import { getNavProjects as getNavProjectsQuerySchema, removeEntity } from '../../middlewares/schemas';
 import {
 	getNav as getNavController,
 	getPage as getPageController,
@@ -24,6 +24,12 @@ router.get(
 router.get('/get_page', verifySessionTokenMiddleware, getPageController);
 router.post('/create', createRequestSchemaValidator(Schemas.create), verifySessionTokenMiddleware, createController);
 router.patch('/rename', createRequestSchemaValidator(Schemas.rename), verifySessionTokenMiddleware, renameController);
-router.delete('/remove', createRequestSchemaValidator(Schemas.remove), verifySessionTokenMiddleware, removeController);
+router.delete(
+	'/remove',
+	createRequestSchemaValidator(removeEntity, true),
+	createRequestSchemaValidator(Schemas.remove),
+	verifySessionTokenMiddleware,
+	removeController
+);
 
 export default router;

@@ -3,7 +3,7 @@ import { Router } from 'express';
 import { CatalogsItems as Schemas } from '../../facade';
 
 import { createRequestSchemaValidator, verifySessionToken as verifySessionTokenMiddleware } from '../../../middlewares';
-import { getCatalogsItems as getCatalogsItemsQuerySchema } from '../../../middlewares/schemas';
+import { getCatalogsItems as getCatalogsItemsQuerySchema, removeEntity } from '../../../middlewares/schemas';
 import {
 	get as getController,
 	create as createController,
@@ -22,6 +22,12 @@ router.get(
 );
 router.post('/create', createRequestSchemaValidator(Schemas.create), verifySessionTokenMiddleware, createController);
 router.patch('/edit', createRequestSchemaValidator(Schemas.edit), verifySessionTokenMiddleware, editController);
-router.delete('/remove', createRequestSchemaValidator(Schemas.remove), verifySessionTokenMiddleware, removeController);
+router.delete(
+	'/remove',
+	createRequestSchemaValidator(removeEntity, true),
+	createRequestSchemaValidator(Schemas.remove),
+	verifySessionTokenMiddleware,
+	removeController
+);
 
 export default router;
