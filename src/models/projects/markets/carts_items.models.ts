@@ -1,5 +1,6 @@
-import { ModelsUtility } from '../../utility';
 import { cartItemSchema, CartItemObject } from './carts_items.models.schemas';
+
+import { ModelsUtility } from '../../utility';
 
 const utility = new ModelsUtility<typeof cartItemSchema, 'market_id' | 'catalog_item_id'>(cartItemSchema, 'carts_items', 'cart item');
 

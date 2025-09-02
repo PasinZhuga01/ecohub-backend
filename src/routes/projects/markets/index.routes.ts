@@ -1,6 +1,5 @@
 import { Router } from 'express';
-
-import { Markets as Schemas } from '../../facade';
+import { Markets as Schemas } from 'ecohub-shared/schemas/requests';
 
 import { createRequestSchemaValidator, verifySessionToken as verifySessionTokenMiddleware } from '../../../middlewares';
 import { getMarkets as getMarketsQuerySchema, removeEntity } from '../../../middlewares/schemas';

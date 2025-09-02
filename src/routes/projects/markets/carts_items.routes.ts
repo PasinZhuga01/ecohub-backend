@@ -1,6 +1,5 @@
 import { Router } from 'express';
-
-import { CartsItems as Schemas } from '../../facade';
+import { CartsItems as Schemas } from 'ecohub-shared/schemas/requests';
 
 import { createRequestSchemaValidator, verifySessionToken as verifySessionTokenMiddleware } from '../../../middlewares';
 import { clearCartsItems, getCartsItems as getCartsItemsQuerySchema, removeEntity } from '../../../middlewares/schemas';

@@ -1,7 +1,8 @@
+import { CartsItems as Requests } from 'ecohub-shared/schemas/requests';
+import { CartsItems as Responses } from 'ecohub-shared/schemas/responses';
+
 import { safePayload } from '../../utils';
 import { Request, ResponseWithSession } from '../../types';
-import { CartsItems as Requests } from '../../facade/requests';
-import { CartsItems as Responses } from '../../facade/responses';
 
 import { getItems, addItem, recountItem, removeItem, clearItems } from '../../../services/projects/markets/carts_items.services';
 

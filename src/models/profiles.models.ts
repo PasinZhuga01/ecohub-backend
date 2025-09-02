@@ -1,5 +1,6 @@
+import { user as userSchema, UserObject } from 'ecohub-shared/schemas/db';
+
 import { ModelsUtility } from './utility';
-import { user as userSchema, UserObject } from './facade';
 
 const utility = new ModelsUtility<typeof userSchema, 'login' | 'password'>(userSchema, 'users', 'user');
 

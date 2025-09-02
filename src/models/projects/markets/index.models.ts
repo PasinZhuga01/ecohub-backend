@@ -1,5 +1,6 @@
-import { ModelsUtility } from '../../utility';
 import { marketSchema, MarketObject } from './index.models.schemas';
+
+import { ModelsUtility } from '../../utility';
 
 const utility = new ModelsUtility<typeof marketSchema, 'project_id' | 'name'>(marketSchema, 'markets', 'market');
 

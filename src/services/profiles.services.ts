@@ -1,9 +1,9 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import { UserObject } from 'ecohub-shared/schemas/db';
 
 import { getEntityOrThrow, assertEntityNotExist } from './utils';
 
-import { UserObject } from '../models/facade';
 import { getUser, createUser } from '../models/profiles.models';
 import { PayloadError } from '../errors';
 import env from '../config/env';

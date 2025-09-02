@@ -1,6 +1,5 @@
 import { z } from 'zod';
-
-import { IdentifiedObject } from './facade';
+import { IdentifiedObject } from 'ecohub-shared/schemas/db';
 
 import db from '../config/db';
 import { DatabaseError } from '../errors';

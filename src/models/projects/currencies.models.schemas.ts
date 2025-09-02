@@ -1,6 +1,5 @@
 import { z } from 'zod';
-
-import { currency as currencyBaseSchema } from '../facade';
+import { currency as currencyBaseSchema } from 'ecohub-shared/schemas/db';
 
 export const currencySchema = currencyBaseSchema.transform(({ project_id, icon_src, ...object }) => ({
 	...object,

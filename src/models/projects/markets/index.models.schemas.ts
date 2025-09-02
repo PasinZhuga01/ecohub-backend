@@ -1,6 +1,5 @@
 import { z } from 'zod';
-
-import { market as marketBaseSchema } from '../../facade';
+import { market as marketBaseSchema } from 'ecohub-shared/schemas/db';
 
 export const marketSchema = marketBaseSchema.transform(({ project_id, interacted_at, ...object }) => ({
 	...object,

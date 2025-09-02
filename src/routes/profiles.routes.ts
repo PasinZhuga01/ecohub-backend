@@ -1,6 +1,5 @@
 import { Router } from 'express';
-
-import { Profiles as Schemas } from './facade';
+import { Profiles as Schemas } from 'ecohub-shared/schemas/requests';
 
 import { createRequestSchemaValidator, verifySessionToken as verifySessionTokenMiddleware } from '../middlewares';
 import { auth as authController, get as getController } from '../controllers/profiles.controllers';

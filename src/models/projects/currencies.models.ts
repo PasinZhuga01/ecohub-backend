@@ -1,5 +1,6 @@
-import { ModelsUtility } from '../utility';
 import { currencySchema, CurrencyObject } from './currencies.models.schemas';
+
+import { ModelsUtility } from '../utility';
 
 import db from '../../config/db';
 

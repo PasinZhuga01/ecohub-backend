@@ -1,6 +1,5 @@
 import { Router } from 'express';
-
-import { Projects as Schemas } from '../facade';
+import { Projects as Schemas } from 'ecohub-shared/schemas/requests';
 
 import { createRequestSchemaValidator, verifySessionToken as verifySessionTokenMiddleware } from '../../middlewares';
 import { getNavProjects as getNavProjectsQuerySchema, removeEntity } from '../../middlewares/schemas';

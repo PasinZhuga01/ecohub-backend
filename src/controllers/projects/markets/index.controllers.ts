@@ -1,7 +1,8 @@
+import { Markets as Requests } from 'ecohub-shared/schemas/requests';
+import { Markets as Responses } from 'ecohub-shared/schemas/responses';
+
 import { safePayload } from '../../utils';
 import { Request, ResponseWithSession } from '../../types';
-import { Markets as Requests } from '../../facade/requests';
-import { Markets as Responses } from '../../facade/responses';
 
 import { getMarketsForPage, createMarket, renameMarket, removeMarket } from '../../../services/projects/markets/index.services';
 

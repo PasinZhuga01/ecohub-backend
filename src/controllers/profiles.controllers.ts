@@ -1,7 +1,8 @@
+import { Profiles as Requests } from 'ecohub-shared/schemas/requests';
+import { Profiles as Responses } from 'ecohub-shared/schemas/responses';
+
 import { safePayload } from './utils';
 import { Request, Response, ResponseWithSession } from './types';
-import { Profiles as Requests } from './facade/requests';
-import { Profiles as Responses } from './facade/responses';
 
 import { registerUser, loginUser, getUserLogin } from '../services/profiles.services';
 

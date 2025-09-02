@@ -1,7 +1,8 @@
+import { Currencies as Requests } from 'ecohub-shared/schemas/requests';
+import { Currencies as Responses } from 'ecohub-shared/schemas/responses';
+
 import { safePayload } from '../utils';
 import { Request, ResponseWithSession } from '../types';
-import { Currencies as Requests } from '../facade/requests';
-import { Currencies as Responses } from '../facade/responses';
 
 import {
 	getCurrencies,

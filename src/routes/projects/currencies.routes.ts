@@ -1,6 +1,5 @@
 import { Router } from 'express';
-
-import { Currencies as Schemas } from '../facade';
+import { Currencies as Schemas } from 'ecohub-shared/schemas/requests';
 
 import { createRequestSchemaValidator, verifySessionToken as verifySessionTokenMiddleware } from '../../middlewares';
 import { getCurrencies as getCurrenciesQuerySchema, removeEntity, createCurrency } from '../../middlewares/schemas';

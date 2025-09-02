@@ -1,5 +1,6 @@
-import { ModelsUtility } from '../../utility';
 import { catalogItemSchema, CatalogItemObject } from './catalogs_items.models.schemas';
+
+import { ModelsUtility } from '../../utility';
 
 import db from '../../../config/db';
 

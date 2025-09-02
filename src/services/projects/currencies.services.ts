@@ -81,7 +81,7 @@ export async function shiftCurrenciesRates(userId: number, projectId: number, va
 
 export async function saveIcon(file: Express.Multer.File): Promise<string> {
 	const filename = uuidv4() + path.extname(file.originalname);
-	const filepath = path.join(env.uploadsUrl, filename);
+	const filepath = path.join(env.uploadsPath, filename);
 
 	await fs.writeFile(filepath, file.buffer);
 
