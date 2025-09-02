@@ -1,5 +1,5 @@
+import { ErrorCodes } from 'ecohub-shared/constants/http';
 import { PayloadError } from '@errors/index';
-import { ErrorCodes } from '@constants/http';
 
 import { Response } from './types';
 

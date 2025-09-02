@@ -1,9 +1,9 @@
 import { z } from 'zod';
 import jwt from 'jsonwebtoken';
 import { NextFunction, Request, RequestHandler, Response } from 'express';
+import { ErrorCodes } from 'ecohub-shared/constants/http';
+import { ErrorPayload } from 'ecohub-shared/types/http';
 import env from '@config/env';
-import { ErrorCodes } from '@constants/http';
-import { ErrorPayload } from '@app-types/http';
 
 export function createRequestSchemaValidator(
 	schema: z.ZodType,
