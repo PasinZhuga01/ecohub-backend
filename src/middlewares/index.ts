@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import jwt from 'jsonwebtoken';
+import jwt, { TokenExpiredError } from 'jsonwebtoken';
 import { NextFunction, Request, RequestHandler, Response } from 'express';
 import { ErrorCodes } from 'ecohub-shared/constants/http';
 import { ErrorPayload } from 'ecohub-shared/types/http';
@@ -31,25 +31,33 @@ export function createRequestSchemaValidator(
 }
 
 export function verifySessionToken(req: Request, res: Response<ErrorPayload, { userId?: number }>, next: NextFunction) {
-	const authHeaderRaw = req.headers['authorization'] || req.headers['Authorization'];
-	const authHeader = Array.isArray(authHeaderRaw) ? authHeaderRaw[0] : authHeaderRaw;
+	try {
+		const authHeaderRaw = req.headers['authorization'] || req.headers['Authorization'];
+		const authHeader = Array.isArray(authHeaderRaw) ? authHeaderRaw[0] : authHeaderRaw;
 
-	if (!authHeader) {
-		return res.status(401).json({ code: 'INVALID_SESSION' });
+		if (!authHeader) {
+			return res.status(401).json({ code: 'INVALID_SESSION' });
+		}
+
+		if (!authHeader.startsWith('Bearer ')) {
+			return res.status(401).json({ code: 'INVALID_SESSION' });
+		}
+
+		const token = authHeader.slice(7);
+		const object = jwt.verify(token, env.jwt.secretKey) as unknown;
+
+		if (typeof object !== 'object' || object === null || !('id' in object) || typeof object.id !== 'number') {
+			return res.status(401).json({ code: 'INVALID_SESSION' });
+		}
+
+		res.locals.userId = object.id;
+
+		return next();
+	} catch (error) {
+		if (error instanceof TokenExpiredError) {
+			return res.status(401).json({ code: 'INVALID_SESSION' });
+		}
+
+		throw error;
 	}
-
-	if (!authHeader.startsWith('Bearer ')) {
-		return res.status(401).json({ code: 'INVALID_SESSION' });
-	}
-
-	const token = authHeader.slice(7);
-	const object = jwt.verify(token, env.jwt.secretKey) as unknown;
-
-	if (typeof object !== 'object' || object === null || !('id' in object) || typeof object.id !== 'number') {
-		return res.status(401).json({ code: 'INVALID_SESSION' });
-	}
-
-	res.locals.userId = object.id;
-
-	return next();
 }
