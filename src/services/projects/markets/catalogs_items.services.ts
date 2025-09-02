@@ -2,7 +2,6 @@ import { toCatalogItemObject, CatalogItemObject } from './catalogs_items.service
 import { assertUserAccessToMarket } from './index.services';
 
 import { getEntityOrThrow, assertEntityNotExist } from '../../utils';
-
 import {
 	getItem,
 	getItems as getItemsModel,

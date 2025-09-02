@@ -1,9 +1,7 @@
 import { toMarketNavObject, toMarketPageObject, MarketNavObject, MarketPageObject } from './index.services.schemas';
 
 import { assertUserAccessToProject } from '../index.services';
-
 import { getEntityOrThrow, assertEntityNotExist } from '../../utils';
-
 import {
 	getMarket,
 	getMarketsByOrderDesc,

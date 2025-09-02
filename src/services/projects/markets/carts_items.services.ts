@@ -3,7 +3,6 @@ import { assertMarketAccessToItem } from './catalogs_items.services';
 import { assertUserAccessToMarket } from './index.services';
 
 import { getEntityOrThrow } from '../../utils';
-
 import {
 	getItem,
 	getItems as getItemsModel,

@@ -2,7 +2,6 @@ import { toProjectNavObject, toProjectPageObject, ProjectNavObject, ProjectPageO
 import { getMarketsForNav } from './markets/index.services';
 
 import { getEntityOrThrow, assertEntityNotExist } from '../utils';
-
 import {
 	getProject,
 	getProjectsByOrderDesc,

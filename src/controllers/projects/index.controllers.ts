@@ -3,14 +3,13 @@ import { Projects as Responses } from 'ecohub-shared/schemas/responses';
 
 import { safePayload } from '../utils';
 import { Request, ResponseWithSession } from '../types';
-
 import { getProjectsForNav, getProjectsForPage, createProject, renameProject, removeProject } from '../../services/projects/index.services';
 
 export async function getNav(req: Request<Requests.GetNavRequest>, res: ResponseWithSession<Responses.GetNavResponse>) {
 	await safePayload(res, async () => await getProjectsForNav(res.locals.userId, req.body.maxCount));
 }
 
-export async function getPage(_: Request<{}>, res: ResponseWithSession<Responses.GetPageResponse>) {
+export async function getPage(_: Request<object>, res: ResponseWithSession<Responses.GetPageResponse>) {
 	await safePayload(res, async () => await getProjectsForPage(res.locals.userId));
 }
 

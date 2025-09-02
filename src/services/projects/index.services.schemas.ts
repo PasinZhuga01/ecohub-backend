@@ -1,7 +1,6 @@
 import { MarketNavObject } from './markets/index.services.schemas';
 
 import { pickObject, toStringDate } from '../utils';
-
 import { ProjectObject as ProjectBaseObject } from '../../models/projects/index.models.schemas';
 
 export type ProjectNavObject = Pick<ProjectBaseObject, 'id' | 'name'> & { markets: MarketNavObject[] };

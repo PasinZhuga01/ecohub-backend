@@ -18,7 +18,7 @@ export async function auth(req: Request<Requests.AuthRequest>, res: Response<Res
 	});
 }
 
-export async function get(_: Request<{}>, res: ResponseWithSession<Responses.GetResponse>) {
+export async function get(_: Request<object>, res: ResponseWithSession<Responses.GetResponse>) {
 	await safePayload(res, async () => {
 		return { login: await getUserLogin(res.locals.userId) };
 	});

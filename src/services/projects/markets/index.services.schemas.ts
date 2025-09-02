@@ -1,5 +1,4 @@
 import { pickObject, toStringDate } from '../../utils';
-
 import { MarketObject as MarketBaseObject } from '../../../models/projects/markets/index.models.schemas';
 
 export type MarketNavObject = Pick<MarketBaseObject, 'id' | 'name'>;

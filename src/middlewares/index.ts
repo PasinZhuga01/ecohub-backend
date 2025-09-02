@@ -10,7 +10,7 @@ export function createRequestSchemaValidator(
 	schema: z.ZodType,
 	isFromQuery: boolean = false,
 	isUpdateBody?: boolean
-): RequestHandler<{}, ErrorPayload> {
+): RequestHandler<object, ErrorPayload> {
 	return async function (req, res, next) {
 		const result = await schema.safeParseAsync(isFromQuery ? req.query : req.body);
 
