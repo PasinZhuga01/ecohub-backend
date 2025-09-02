@@ -5,11 +5,11 @@ import {
 	recountItem as recountItemModel,
 	removeItem as removeItemModel,
 	clearItems as clearItemsModel
-} from '@models/projects/markets/carts_items.models';
-import { CartItemObject as CartItemObjectModel } from '@models/projects/markets/carts_items.models.schemas';
+} from '@models/projects/markets/carts-items.models';
+import { CartItemObject as CartItemObjectModel } from '@models/projects/markets/carts-items.models.schemas';
 
-import { toCartItemObject, CartItemObject } from './carts_items.services.schemas';
-import { assertMarketAccessToItem } from './catalogs_items.services';
+import { toCartItemObject, CartItemObject } from './carts-items.services.schemas';
+import { assertMarketAccessToItem } from './catalogs-items.services';
 import { assertUserAccessToMarket } from './index.services';
 
 import { getEntityOrThrow } from '../../utils';

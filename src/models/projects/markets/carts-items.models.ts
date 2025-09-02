@@ -1,4 +1,4 @@
-import { cartItemSchema, CartItemObject } from './carts_items.models.schemas';
+import { cartItemSchema, CartItemObject } from './carts-items.models.schemas';
 
 import { ModelsUtility } from '../../utility';
 

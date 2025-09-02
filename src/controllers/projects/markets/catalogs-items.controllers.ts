@@ -1,6 +1,6 @@
 import { CatalogsItems as Requests } from 'ecohub-shared/schemas/requests';
 import { CatalogsItems as Responses } from 'ecohub-shared/schemas/responses';
-import { getItems, createItem, editItem, removeItem } from '@services/projects/markets/catalogs_items.services';
+import { getItems, createItem, editItem, removeItem } from '@services/projects/markets/catalogs-items.services';
 
 import { safePayload } from '../../utils';
 import { Request, ResponseWithSession } from '../../types';

@@ -1,4 +1,4 @@
-import { CatalogItemObject as CatalogItemBaseObject } from '@models/projects/markets/catalogs_items.models.schemas';
+import { CatalogItemObject as CatalogItemBaseObject } from '@models/projects/markets/catalogs-items.models.schemas';
 
 import { pickObject } from '../../utils';
 

@@ -1,6 +1,6 @@
 import { CartsItems as Requests } from 'ecohub-shared/schemas/requests';
 import { CartsItems as Responses } from 'ecohub-shared/schemas/responses';
-import { getItems, addItem, recountItem, removeItem, clearItems } from '@services/projects/markets/carts_items.services';
+import { getItems, addItem, recountItem, removeItem, clearItems } from '@services/projects/markets/carts-items.services';
 
 import { safePayload } from '../../utils';
 import { Request, ResponseWithSession } from '../../types';

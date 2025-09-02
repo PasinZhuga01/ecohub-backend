@@ -16,7 +16,7 @@ import env from '@config/env';
 import { toCurrencyObject, CurrencyObject } from './currencies.services.schemas';
 import { assertUserAccessToProject } from './index.services';
 import { getMarketsForPage } from './markets/index.services';
-import { shiftItemsPrices } from './markets/catalogs_items.services';
+import { shiftItemsPrices } from './markets/catalogs-items.services';
 
 import { getEntityOrThrow, assertEntityNotExist } from '../utils';
 

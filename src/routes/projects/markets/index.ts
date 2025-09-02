@@ -1,8 +1,8 @@
 import Router from 'express';
 
 import marketsRouter from './index.routes';
-import catalogsItemsRouter from './catalogs_items.routes';
-import cartsItemsRouter from './carts_items.routes';
+import catalogsItemsRouter from './catalogs-items.routes';
+import cartsItemsRouter from './carts-items.routes';
 
 const router = Router();
 

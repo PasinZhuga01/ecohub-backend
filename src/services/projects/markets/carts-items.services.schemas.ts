@@ -1,4 +1,4 @@
-import { CartItemObject as CartItemBaseObject } from '@models/projects/markets/carts_items.models.schemas';
+import { CartItemObject as CartItemBaseObject } from '@models/projects/markets/carts-items.models.schemas';
 
 import { pickObject } from '../../utils';
 

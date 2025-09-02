@@ -7,7 +7,7 @@ import {
 	create as createController,
 	edit as editController,
 	remove as removeController
-} from '@controllers/projects/markets/catalogs_items.controllers';
+} from '@controllers/projects/markets/catalogs-items.controllers';
 
 const router = Router();
 

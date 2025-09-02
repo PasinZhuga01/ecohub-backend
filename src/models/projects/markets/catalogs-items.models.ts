@@ -1,6 +1,6 @@
 import db from '@config/db';
 
-import { catalogItemSchema, CatalogItemObject } from './catalogs_items.models.schemas';
+import { catalogItemSchema, CatalogItemObject } from './catalogs-items.models.schemas';
 
 import { ModelsUtility } from '../../utility';
 
