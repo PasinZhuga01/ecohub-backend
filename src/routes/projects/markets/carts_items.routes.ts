@@ -1,15 +1,14 @@
 import { Router } from 'express';
 import { CartsItems as Schemas } from 'ecohub-shared/schemas/requests';
-
-import { createRequestSchemaValidator, verifySessionToken as verifySessionTokenMiddleware } from '../../../middlewares';
-import { clearCartsItems, getCartsItems as getCartsItemsQuerySchema, removeEntity } from '../../../middlewares/schemas';
+import { createRequestSchemaValidator, verifySessionToken as verifySessionTokenMiddleware } from '@middlewares/index';
+import { clearCartsItems, getCartsItems as getCartsItemsQuerySchema, removeEntity } from '@middlewares/schemas';
 import {
 	get as getController,
 	add as addController,
 	recount as recountController,
 	remove as removeController,
 	clear as clearController
-} from '../../../controllers/projects/markets/carts_items.controllers';
+} from '@controllers/projects/markets/carts_items.controllers';
 
 const router = Router();
 

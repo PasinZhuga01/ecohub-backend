@@ -1,12 +1,11 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { UserObject } from 'ecohub-shared/schemas/db';
+import { getUser, createUser } from '@models/profiles.models';
+import { PayloadError } from '@errors/index';
+import env from '@config/env';
 
 import { getEntityOrThrow, assertEntityNotExist } from './utils';
-
-import { getUser, createUser } from '../models/profiles.models';
-import { PayloadError } from '../errors';
-import env from '../config/env';
 
 async function getUserOrThrow(id: number): Promise<UserObject>;
 async function getUserOrThrow(login: string): Promise<UserObject>;

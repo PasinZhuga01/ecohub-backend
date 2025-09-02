@@ -1,5 +1,5 @@
-import { ErrorPayload, Resource } from '../types/http';
-import { PayloadError } from '../errors';
+import { ErrorPayload, Resource } from '@app-types/http';
+import { PayloadError } from '@errors/index';
 
 export async function getEntityOrThrow<T extends object>(entity: T | null, resource: Resource): Promise<T> {
 	if (entity === null) {

@@ -1,7 +1,8 @@
+import db from '@config/db';
+
 import { currencySchema, CurrencyObject } from './currencies.models.schemas';
 
 import { ModelsUtility } from '../utility';
-import db from '../../config/db';
 
 const utility = new ModelsUtility<typeof currencySchema, 'project_id' | 'icon_src' | 'name' | 'rate'>(
 	currencySchema,

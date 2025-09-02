@@ -1,7 +1,7 @@
-import { Response } from './types';
+import { PayloadError } from '@errors/index';
+import { ErrorCodes } from '@constants/http';
 
-import { PayloadError } from '../errors';
-import { ErrorCodes } from '../constants/http';
+import { Response } from './types';
 
 export async function safePayload<T extends object>(res: Response<T>, callback: () => Promise<T>) {
 	try {

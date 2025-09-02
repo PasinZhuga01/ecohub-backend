@@ -1,7 +1,8 @@
+import db from '@config/db';
+
 import { catalogItemSchema, CatalogItemObject } from './catalogs_items.models.schemas';
 
 import { ModelsUtility } from '../../utility';
-import db from '../../../config/db';
 
 const utility = new ModelsUtility<typeof catalogItemSchema, 'market_id' | 'name' | 'count' | 'price'>(
 	catalogItemSchema,

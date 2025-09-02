@@ -1,14 +1,13 @@
 import { Router } from 'express';
 import { Markets as Schemas } from 'ecohub-shared/schemas/requests';
-
-import { createRequestSchemaValidator, verifySessionToken as verifySessionTokenMiddleware } from '../../../middlewares';
-import { getMarkets as getMarketsQuerySchema, removeEntity } from '../../../middlewares/schemas';
+import { createRequestSchemaValidator, verifySessionToken as verifySessionTokenMiddleware } from '@middlewares/index';
+import { getMarkets as getMarketsQuerySchema, removeEntity } from '@middlewares/schemas';
 import {
 	get as getController,
 	create as createController,
 	rename as renameController,
 	remove as removeController
-} from '../../../controllers/projects/markets/index.controllers';
+} from '@controllers/projects/markets/index.controllers';
 
 const router = Router();
 

@@ -1,16 +1,17 @@
-import { toProjectNavObject, toProjectPageObject, ProjectNavObject, ProjectPageObject } from './index.services.schemas';
-import { getMarketsForNav } from './markets/index.services';
-
-import { getEntityOrThrow, assertEntityNotExist } from '../utils';
 import {
 	getProject,
 	getProjectsByOrderDesc,
 	createProject as createProjectModel,
 	renameProject as renameProjectModel,
 	removeProject as removeProjectModel
-} from '../../models/projects/index.models';
-import { ProjectObject } from '../../models/projects/index.models.schemas';
-import { PayloadError } from '../../errors';
+} from '@models/projects/index.models';
+import { ProjectObject } from '@models/projects/index.models.schemas';
+import { PayloadError } from '@errors/index';
+
+import { toProjectNavObject, toProjectPageObject, ProjectNavObject, ProjectPageObject } from './index.services.schemas';
+import { getMarketsForNav } from './markets/index.services';
+
+import { getEntityOrThrow, assertEntityNotExist } from '../utils';
 
 export async function getProjectOrThrow(id: number): Promise<ProjectObject> {
 	return await getEntityOrThrow(await getProject(id), 'project');

@@ -1,15 +1,14 @@
 import { Router } from 'express';
 import { Projects as Schemas } from 'ecohub-shared/schemas/requests';
-
-import { createRequestSchemaValidator, verifySessionToken as verifySessionTokenMiddleware } from '../../middlewares';
-import { getNavProjects as getNavProjectsQuerySchema, removeEntity } from '../../middlewares/schemas';
+import { createRequestSchemaValidator, verifySessionToken as verifySessionTokenMiddleware } from '@middlewares/index';
+import { getNavProjects as getNavProjectsQuerySchema, removeEntity } from '@middlewares/schemas';
 import {
 	getNav as getNavController,
 	getPage as getPageController,
 	create as createController,
 	rename as renameController,
 	remove as removeController
-} from '../../controllers/projects/index.controllers';
+} from '@controllers/projects/index.controllers';
 
 const router = Router();
 

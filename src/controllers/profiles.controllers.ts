@@ -1,10 +1,9 @@
 import { Profiles as Requests } from 'ecohub-shared/schemas/requests';
 import { Profiles as Responses } from 'ecohub-shared/schemas/responses';
+import { registerUser, loginUser, getUserLogin } from '@services/profiles.services';
 
 import { safePayload } from './utils';
 import { Request, Response, ResponseWithSession } from './types';
-
-import { registerUser, loginUser, getUserLogin } from '../services/profiles.services';
 
 export async function auth(req: Request<Requests.AuthRequest>, res: Response<Responses.AuthResponse>) {
 	await safePayload(res, async () => {

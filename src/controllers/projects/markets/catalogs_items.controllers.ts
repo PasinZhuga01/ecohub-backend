@@ -1,9 +1,9 @@
 import { CatalogsItems as Requests } from 'ecohub-shared/schemas/requests';
 import { CatalogsItems as Responses } from 'ecohub-shared/schemas/responses';
+import { getItems, createItem, editItem, removeItem } from '@services/projects/markets/catalogs_items.services';
 
 import { safePayload } from '../../utils';
 import { Request, ResponseWithSession } from '../../types';
-import { getItems, createItem, editItem, removeItem } from '../../../services/projects/markets/catalogs_items.services';
 
 export async function get(req: Request<Requests.GetRequest>, res: ResponseWithSession<Responses.GetResponse>) {
 	await safePayload(res, async () => await getItems(res.locals.userId, req.body.marketId));

@@ -1,7 +1,3 @@
-import { toCatalogItemObject, CatalogItemObject } from './catalogs_items.services.schemas';
-import { assertUserAccessToMarket } from './index.services';
-
-import { getEntityOrThrow, assertEntityNotExist } from '../../utils';
 import {
 	getItem,
 	getItems as getItemsModel,
@@ -9,9 +5,14 @@ import {
 	editItem as editItemModel,
 	removeItem as removeItemModel,
 	shiftItemsPrices as shiftItemsPricesModel
-} from '../../../models/projects/markets/catalogs_items.models';
-import { CatalogItemObject as CatalogItemObjectModel } from '../../../models/projects/markets/catalogs_items.models.schemas';
-import { PayloadError } from '../../../errors';
+} from '@models/projects/markets/catalogs_items.models';
+import { CatalogItemObject as CatalogItemObjectModel } from '@models/projects/markets/catalogs_items.models.schemas';
+import { PayloadError } from '@errors/index';
+
+import { toCatalogItemObject, CatalogItemObject } from './catalogs_items.services.schemas';
+import { assertUserAccessToMarket } from './index.services';
+
+import { getEntityOrThrow, assertEntityNotExist } from '../../utils';
 
 export async function getItemOrThrow(id: number): Promise<CatalogItemObjectModel> {
 	return await getEntityOrThrow(await getItem(id), 'catalog_item');

@@ -1,16 +1,15 @@
 import { Router } from 'express';
 import { Currencies as Schemas } from 'ecohub-shared/schemas/requests';
-
-import { createRequestSchemaValidator, verifySessionToken as verifySessionTokenMiddleware } from '../../middlewares';
-import { getCurrencies as getCurrenciesQuerySchema, removeEntity, createCurrency } from '../../middlewares/schemas';
+import { createRequestSchemaValidator, verifySessionToken as verifySessionTokenMiddleware } from '@middlewares/index';
+import { getCurrencies as getCurrenciesQuerySchema, removeEntity, createCurrency } from '@middlewares/schemas';
 import {
 	get as getController,
 	create as createController,
 	rerate as rerateController,
 	remove as removeController,
 	shift as shiftController
-} from '../../controllers/projects/currencies.controllers';
-import multer from '../../config/multer';
+} from '@controllers/projects/currencies.controllers';
+import multer from '@config/multer';
 
 const router = Router();
 

@@ -1,6 +1,5 @@
 import { Request as ExpressRequest, Response as ExpressResponse } from 'express';
-
-import { ErrorPayload } from '../types/http';
+import { ErrorPayload } from '@app-types/http';
 
 export type Request<B extends object> = ExpressRequest<object, object, B>;
 

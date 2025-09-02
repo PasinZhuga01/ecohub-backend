@@ -1,5 +1,6 @@
+import { CartItemObject as CartItemBaseObject } from '@models/projects/markets/carts_items.models.schemas';
+
 import { pickObject } from '../../utils';
-import { CartItemObject as CartItemBaseObject } from '../../../models/projects/markets/carts_items.models.schemas';
 
 export type CartItemObject = Pick<CartItemBaseObject, 'id' | 'catalogItemId' | 'count'>;
 

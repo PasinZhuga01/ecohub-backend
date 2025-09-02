@@ -1,15 +1,15 @@
 import { Currencies as Requests } from 'ecohub-shared/schemas/requests';
 import { Currencies as Responses } from 'ecohub-shared/schemas/responses';
-
-import { safePayload } from '../utils';
-import { Request, ResponseWithSession } from '../types';
 import {
 	getCurrencies,
 	createCurrency,
 	rerateCurrency,
 	removeCurrency,
 	shiftCurrenciesRates
-} from '../../services/projects/currencies.services';
+} from '@services/projects/currencies.services';
+
+import { safePayload } from '../utils';
+import { Request, ResponseWithSession } from '../types';
 
 export async function get(req: Request<Requests.GetRequest>, res: ResponseWithSession<Responses.GetResponse>) {
 	await safePayload(res, async () => await getCurrencies(res.locals.userId, req.body.projectId));

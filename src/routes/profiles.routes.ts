@@ -1,8 +1,7 @@
 import { Router } from 'express';
 import { Profiles as Schemas } from 'ecohub-shared/schemas/requests';
-
-import { createRequestSchemaValidator, verifySessionToken as verifySessionTokenMiddleware } from '../middlewares';
-import { auth as authController, get as getController } from '../controllers/profiles.controllers';
+import { createRequestSchemaValidator, verifySessionToken as verifySessionTokenMiddleware } from '@middlewares/index';
+import { auth as authController, get as getController } from '@controllers/profiles.controllers';
 
 const router = Router();
 

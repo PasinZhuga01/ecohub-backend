@@ -1,10 +1,9 @@
 import { z } from 'zod';
 import jwt from 'jsonwebtoken';
 import { NextFunction, Request, RequestHandler, Response } from 'express';
-
-import { ErrorCodes } from '../constants/http';
-import { ErrorPayload } from '../types/http';
-import env from '../config/env';
+import env from '@config/env';
+import { ErrorCodes } from '@constants/http';
+import { ErrorPayload } from '@app-types/http';
 
 export function createRequestSchemaValidator(
 	schema: z.ZodType,

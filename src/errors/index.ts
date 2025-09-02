@@ -1,4 +1,4 @@
-import { ErrorPayload } from '../types/http';
+import { ErrorPayload } from '@app-types/http';
 
 abstract class BaseError extends Error {
 	protected constructor(name: string, message: string) {

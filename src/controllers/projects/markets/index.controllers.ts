@@ -1,9 +1,9 @@
 import { Markets as Requests } from 'ecohub-shared/schemas/requests';
 import { Markets as Responses } from 'ecohub-shared/schemas/responses';
+import { getMarketsForPage, createMarket, renameMarket, removeMarket } from '@services/projects/markets/index.services';
 
 import { safePayload } from '../../utils';
 import { Request, ResponseWithSession } from '../../types';
-import { getMarketsForPage, createMarket, renameMarket, removeMarket } from '../../../services/projects/markets/index.services';
 
 export async function get(req: Request<Requests.GetRequest>, res: ResponseWithSession<Responses.GetResponse>) {
 	await safePayload(res, async () => await getMarketsForPage(res.locals.userId, req.body.projectId));

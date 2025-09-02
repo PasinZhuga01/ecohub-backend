@@ -2,13 +2,6 @@ import fs from 'fs/promises';
 import path from 'path';
 
 import { v4 as uuidv4 } from 'uuid';
-
-import { toCurrencyObject, CurrencyObject } from './currencies.services.schemas';
-import { assertUserAccessToProject } from './index.services';
-import { getMarketsForPage } from './markets/index.services';
-import { shiftItemsPrices } from './markets/catalogs_items.services';
-
-import { getEntityOrThrow, assertEntityNotExist } from '../utils';
 import {
 	getCurrency,
 	getCurrencies as getCurrenciesModel,
@@ -16,9 +9,16 @@ import {
 	rerateCurrency as rerateCurrencyModel,
 	removeCurrency as removeCurrencyModel,
 	shiftCurrenciesRates as shiftCurrenciesRatesModel
-} from '../../models/projects/currencies.models';
-import { CurrencyObject as CurrencyObjectModel } from '../../models/projects/currencies.models.schemas';
-import env from '../../config/env';
+} from '@models/projects/currencies.models';
+import { CurrencyObject as CurrencyObjectModel } from '@models/projects/currencies.models.schemas';
+import env from '@config/env';
+
+import { toCurrencyObject, CurrencyObject } from './currencies.services.schemas';
+import { assertUserAccessToProject } from './index.services';
+import { getMarketsForPage } from './markets/index.services';
+import { shiftItemsPrices } from './markets/catalogs_items.services';
+
+import { getEntityOrThrow, assertEntityNotExist } from '../utils';
 
 export async function getCurrencyOrThrow(id: number): Promise<CurrencyObjectModel> {
 	return await getEntityOrThrow(await getCurrency(id), 'currency');

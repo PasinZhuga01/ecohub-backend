@@ -1,8 +1,7 @@
 import { z } from 'zod';
 import { IdentifiedObject } from 'ecohub-shared/schemas/db';
-
-import db from '../config/db';
-import { DatabaseError } from '../errors';
+import db from '@config/db';
+import { DatabaseError } from '@errors/index';
 
 export class ModelsUtility<T extends z.ZodType<IdentifiedObject, IdentifiedObject>, C extends keyof z.input<T>> {
 	private readonly _schema: T;

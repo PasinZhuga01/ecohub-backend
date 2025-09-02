@@ -1,4 +1,4 @@
-import { ErrorCodes } from '../constants/http';
+import { ErrorCodes } from '@constants/http';
 
 /* payloads interfaces */
 

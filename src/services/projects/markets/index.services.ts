@@ -1,15 +1,15 @@
-import { toMarketNavObject, toMarketPageObject, MarketNavObject, MarketPageObject } from './index.services.schemas';
-
-import { assertUserAccessToProject } from '../index.services';
-import { getEntityOrThrow, assertEntityNotExist } from '../../utils';
 import {
+	createMarket as createMarketModel,
 	getMarket,
 	getMarketsByOrderDesc,
-	createMarket as createMarketModel,
-	renameMarket as renameMarketModel,
-	removeMarket as removeMarketModel
-} from '../../../models/projects/markets/index.models';
-import { MarketObject } from '../../../models/projects/markets/index.models.schemas';
+	removeMarket as removeMarketModel,
+	renameMarket as renameMarketModel} from '@models/projects/markets/index.models';
+import { MarketObject } from '@models/projects/markets/index.models.schemas';
+
+import { MarketNavObject, MarketPageObject,toMarketNavObject, toMarketPageObject } from './index.services.schemas';
+
+import { assertEntityNotExist,getEntityOrThrow } from '../../utils';
+import { assertUserAccessToProject } from '../index.services';
 
 export async function getMarketOrThrow(id: number): Promise<MarketObject> {
 	return await getEntityOrThrow(await getMarket(id), 'market');
