@@ -6,7 +6,7 @@
 			"type": "node",
 			"request": "launch",
 			"runtimeExecutable": "nodemon",
-			"runtimeArgs": ["--exec", "rimraf dist && tsc && node dist/server.js", "--ext", "ts", "--watch", "src"],
+			"runtimeArgs": ["--exec", "eslint src --ext .ts && rimraf dist && tsc && node dist/server.js", "--ext", "ts", "--watch", "src"],
 			"console": "integratedTerminal"
 		}
 	]
