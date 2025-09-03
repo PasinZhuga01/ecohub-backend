@@ -62,6 +62,10 @@ export async function rerateCurrency(userId: number, currencyId: number, rate: n
 
 export async function removeCurrency(userId: number, currencyId: number): Promise<true> {
 	await assertUserAccessToCurrency(userId, currencyId);
+
+	const iconSrc = (await getCurrencyOrThrow(currencyId)).iconSrc;
+
+	await removeIcon(iconSrc);
 	await removeCurrencyModel(currencyId);
 
 	return true;
@@ -85,4 +89,8 @@ export async function saveIcon(file: Express.Multer.File): Promise<string> {
 	await fs.writeFile(filepath, file.buffer);
 
 	return filename;
+}
+
+export async function removeIcon(filename: string) {
+	await fs.unlink(path.join(env.uploadsPath, filename));
 }
