@@ -2,17 +2,23 @@ import {
 	createMarket as createMarketModel,
 	getMarket,
 	getMarketsByOrderDesc,
+	updateInteractedAt,
 	removeMarket as removeMarketModel,
-	renameMarket as renameMarketModel} from '@models/projects/markets/index.models';
+	renameMarket as renameMarketModel
+} from '@models/projects/markets/index.models';
 import { MarketObject } from '@models/projects/markets/index.models.schemas';
 
-import { MarketNavObject, MarketPageObject,toMarketNavObject, toMarketPageObject } from './index.services.schemas';
+import { MarketNavObject, MarketPageObject, toMarketNavObject, toMarketPageObject } from './index.services.schemas';
 
-import { assertEntityNotExist,getEntityOrThrow } from '../../utils';
+import { assertEntityNotExist, getEntityOrThrow } from '../../utils';
 import { assertUserAccessToProject } from '../index.services';
 
 export async function getMarketOrThrow(id: number): Promise<MarketObject> {
-	return await getEntityOrThrow(await getMarket(id), 'market');
+	const market = await getEntityOrThrow(await getMarket(id), 'market');
+
+	await updateInteractedAt(id);
+
+	return market;
 }
 
 export async function assertMarketNotExist(projectId: number, name: string) {

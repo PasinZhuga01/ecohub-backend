@@ -1,6 +1,7 @@
 import {
 	getProject,
 	getProjectsByOrderDesc,
+	updateInteractedAt,
 	createProject as createProjectModel,
 	renameProject as renameProjectModel,
 	removeProject as removeProjectModel
@@ -14,7 +15,11 @@ import { getMarketsForNav } from './markets/index.services';
 import { getEntityOrThrow, assertEntityNotExist } from '../utils';
 
 export async function getProjectOrThrow(id: number): Promise<ProjectObject> {
-	return await getEntityOrThrow(await getProject(id), 'project');
+	const project = await getEntityOrThrow(await getProject(id), 'project');
+
+	await updateInteractedAt(id);
+
+	return project;
 }
 
 export async function assertProjectNotExist(userId: number, name: string) {

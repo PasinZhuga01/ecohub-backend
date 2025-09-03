@@ -23,6 +23,10 @@ export async function renameProject(id: number, name: string) {
 	await utility.updateEntities({ id }, { name });
 }
 
+export async function updateInteractedAt(id: number) {
+	return await utility.updateEntities({ id }, { interacted_at: new Date() });
+}
+
 export async function removeProject(id: number) {
 	await utility.removeEntities({ id });
 }
