@@ -10,7 +10,7 @@ import { CartItemObject as CartItemObjectModel } from '@models/projects/markets/
 
 import { toCartItemObject, CartItemObject } from './carts-items.services.schemas';
 import { assertMarketAccessToItem } from './catalogs-items.services';
-import { assertUserAccessToMarket } from './index.services';
+import { assertUserAccessToMarket, updateMarketInteractedAt } from './index.services';
 
 import { getEntityOrThrow } from '../../utils';
 
@@ -40,19 +40,25 @@ export async function addItem(userId: number, marketId: number, catalogItemId: n
 		return toCartItemObject(await getItemOrThrow(item.id));
 	}
 
+	await updateMarketInteractedAt(marketId);
+
 	return toCartItemObject(await createItemModel(marketId, catalogItemId));
 }
 
 export async function recountItem(userId: number, itemId: number, count: number): Promise<number> {
 	await assertUserAccessToItem(userId, itemId);
 	await recountItemModel(itemId, count);
+	await updateMarketInteractedAt((await getItemOrThrow(itemId)).marketId);
 
 	return count;
 }
 
 export async function removeItem(userId: number, itemId: number): Promise<true> {
+	const { marketId } = await getItemOrThrow(itemId);
+
 	await assertUserAccessToItem(userId, itemId);
 	await removeItemModel(itemId);
+	await updateMarketInteractedAt(marketId);
 
 	return true;
 }
@@ -60,6 +66,7 @@ export async function removeItem(userId: number, itemId: number): Promise<true> 
 export async function clearItems(userId: number, marketId: number): Promise<true> {
 	await assertUserAccessToMarket(userId, marketId);
 	await clearItemsModel(marketId);
+	await updateMarketInteractedAt(marketId);
 
 	return true;
 }

@@ -1,8 +1,8 @@
 import {
-	createMarket as createMarketModel,
 	getMarket,
 	getMarketsByOrderDesc,
-	updateInteractedAt,
+	updateMarketInteractedAt as updateMarketInteractedAtModel,
+	createMarket as createMarketModel,
 	removeMarket as removeMarketModel,
 	renameMarket as renameMarketModel
 } from '@models/projects/markets/index.models';
@@ -11,14 +11,10 @@ import { MarketObject } from '@models/projects/markets/index.models.schemas';
 import { MarketNavObject, MarketPageObject, toMarketNavObject, toMarketPageObject } from './index.services.schemas';
 
 import { assertEntityNotExist, getEntityOrThrow } from '../../utils';
-import { assertUserAccessToProject } from '../index.services';
+import { assertUserAccessToProject, updateProjectInteractedAt } from '../index.services';
 
 export async function getMarketOrThrow(id: number): Promise<MarketObject> {
-	const market = await getEntityOrThrow(await getMarket(id), 'market');
-
-	await updateInteractedAt(id);
-
-	return market;
+	return await getEntityOrThrow(await getMarket(id), 'market');
 }
 
 export async function assertMarketNotExist(projectId: number, name: string) {
@@ -44,6 +40,7 @@ export async function getMarketsForPage(userId: number, projectId: number): Prom
 export async function createMarket(userId: number, projectId: number, name: string): Promise<MarketPageObject> {
 	await assertUserAccessToProject(userId, projectId);
 	await assertMarketNotExist(projectId, name);
+	await updateProjectInteractedAt(projectId);
 
 	return toMarketPageObject(await createMarketModel(projectId, name));
 }
@@ -52,13 +49,22 @@ export async function renameMarket(userId: number, marketId: number, name: strin
 	await assertUserAccessToMarket(userId, marketId);
 	await assertMarketNotExist((await getMarketOrThrow(marketId)).projectId, name);
 	await renameMarketModel(marketId, name);
+	await updateMarketInteractedAt(marketId);
 
 	return name;
 }
 
+export async function updateMarketInteractedAt(id: number) {
+	await updateMarketInteractedAtModel(id);
+	await updateProjectInteractedAt((await getMarketOrThrow(id)).projectId);
+}
+
 export async function removeMarket(userId: number, marketId: number): Promise<true> {
+	const { projectId } = await getMarketOrThrow(marketId);
+
 	await assertUserAccessToMarket(userId, marketId);
 	await removeMarketModel(marketId);
+	await updateProjectInteractedAt(projectId);
 
 	return true;
 }

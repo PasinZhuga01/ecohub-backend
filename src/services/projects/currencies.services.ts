@@ -14,7 +14,7 @@ import { CurrencyObject as CurrencyObjectModel } from '@models/projects/currenci
 import env from '@config/env';
 
 import { toCurrencyObject, CurrencyObject } from './currencies.services.schemas';
-import { assertUserAccessToProject } from './index.services';
+import { assertUserAccessToProject, updateProjectInteractedAt } from './index.services';
 import { getMarketsForPage } from './markets/index.services';
 import { shiftItemsPrices } from './markets/catalogs-items.services';
 
@@ -47,6 +47,7 @@ export async function createCurrency(
 ): Promise<CurrencyObject> {
 	await assertUserAccessToProject(userId, projectId);
 	await assertCurrencyNotExist(projectId, name);
+	await updateProjectInteractedAt(projectId);
 
 	const iconSrc = await saveIcon(icon);
 
@@ -56,6 +57,7 @@ export async function createCurrency(
 export async function rerateCurrency(userId: number, currencyId: number, rate: number): Promise<number> {
 	await assertUserAccessToCurrency(userId, currencyId);
 	await rerateCurrencyModel(currencyId, rate);
+	await updateProjectInteractedAt((await getCurrencyOrThrow(currencyId)).projectId);
 
 	return rate;
 }
@@ -63,10 +65,11 @@ export async function rerateCurrency(userId: number, currencyId: number, rate: n
 export async function removeCurrency(userId: number, currencyId: number): Promise<true> {
 	await assertUserAccessToCurrency(userId, currencyId);
 
-	const iconSrc = (await getCurrencyOrThrow(currencyId)).iconSrc;
+	const { iconSrc, projectId } = await getCurrencyOrThrow(currencyId);
 
 	await removeIcon(iconSrc);
 	await removeCurrencyModel(currencyId);
+	await updateProjectInteractedAt(projectId);
 
 	return true;
 }
@@ -78,6 +81,8 @@ export async function shiftCurrenciesRates(userId: number, projectId: number, va
 	for (const market of await getMarketsForPage(userId, projectId)) {
 		await shiftItemsPrices(userId, market.id, value);
 	}
+
+	await updateProjectInteractedAt(projectId);
 
 	return true;
 }

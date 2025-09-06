@@ -10,7 +10,7 @@ import { CatalogItemObject as CatalogItemObjectModel } from '@models/projects/ma
 import { PayloadError } from '@errors/index';
 
 import { toCatalogItemObject, CatalogItemObject } from './catalogs-items.services.schemas';
-import { assertUserAccessToMarket } from './index.services';
+import { assertUserAccessToMarket, updateMarketInteractedAt } from './index.services';
 
 import { getEntityOrThrow, assertEntityNotExist } from '../../utils';
 
@@ -41,6 +41,7 @@ export async function getItems(userId: number, marketId: number): Promise<Catalo
 export async function createItem(userId: number, marketId: number, name: string, count: number, price: number): Promise<CatalogItemObject> {
 	await assertUserAccessToMarket(userId, marketId);
 	await assertItemNotExist(marketId, name);
+	await updateMarketInteractedAt(marketId);
 
 	return toCatalogItemObject(await createItemModel(marketId, name, count, price));
 }
@@ -48,13 +49,17 @@ export async function createItem(userId: number, marketId: number, name: string,
 export async function editItem(userId: number, itemId: number, component: 'count' | 'price', value: number): Promise<number> {
 	await assertUserAccessToItem(userId, itemId);
 	await editItemModel(itemId, component, value);
+	await updateMarketInteractedAt((await getItemOrThrow(itemId)).marketId);
 
 	return value;
 }
 
 export async function removeItem(userId: number, itemId: number): Promise<true> {
+	const { marketId } = await getItemOrThrow(itemId);
+
 	await assertUserAccessToItem(userId, itemId);
 	await removeItemModel(itemId);
+	await updateMarketInteractedAt(marketId);
 
 	return true;
 }
@@ -62,6 +67,7 @@ export async function removeItem(userId: number, itemId: number): Promise<true> 
 export async function shiftItemsPrices(userId: number, marketId: number, value: number): Promise<true> {
 	await assertUserAccessToMarket(userId, marketId);
 	await shiftItemsPricesModel(marketId, value);
+	await updateMarketInteractedAt(marketId);
 
 	return true;
 }
