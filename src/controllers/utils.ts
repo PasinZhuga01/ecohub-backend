@@ -1,4 +1,4 @@
-import { ErrorCodes } from 'ecohub-shared/constants/http';
+import codes from 'ecohub-shared/http/codes';
 import { PayloadError } from '@errors/index';
 
 import { Response } from './types';
@@ -11,6 +11,6 @@ export async function safePayload<T extends object>(res: Response<T>, callback: 
 			throw error;
 		}
 
-		res.status(ErrorCodes[error.payload.code]).json(error.payload);
+		res.status(codes[error.payload.code]).json(error.payload);
 	}
 }

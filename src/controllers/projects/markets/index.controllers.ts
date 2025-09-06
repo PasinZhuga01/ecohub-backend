@@ -5,7 +5,7 @@ import { getMarketsForPage, createMarket, renameMarket, removeMarket } from '@se
 import { safePayload } from '../../utils';
 import { Request, ResponseWithSession } from '../../types';
 
-export async function get(req: Request<Requests.GetRequest>, res: ResponseWithSession<Responses.GetResponse>) {
+export async function get(req: Request<Requests.GetRequest>, res: ResponseWithSession<Responses.GetListResponse>) {
 	await safePayload(res, async () => await getMarketsForPage(res.locals.userId, req.body.projectId));
 }
 

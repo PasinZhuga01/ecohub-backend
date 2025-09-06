@@ -1,8 +1,8 @@
 import { z } from 'zod';
 import jwt, { TokenExpiredError } from 'jsonwebtoken';
 import { NextFunction, Request, RequestHandler, Response } from 'express';
-import { ErrorCodes } from 'ecohub-shared/constants/http';
-import { ErrorPayload } from 'ecohub-shared/types/http';
+import codes from 'ecohub-shared/http/codes';
+import { ErrorPayload } from 'ecohub-shared/http/types';
 import env from '@config/env';
 
 export function createRequestSchemaValidator(
@@ -19,7 +19,7 @@ export function createRequestSchemaValidator(
 				message: error.message
 			}));
 
-			return res.status(ErrorCodes['INVALID_FORMAT']).json({ code: 'INVALID_FORMAT', details: { targets } });
+			return res.status(codes.INVALID_FORMAT).json({ code: 'INVALID_FORMAT', details: { targets } });
 		}
 
 		if ((isFromQuery && isUpdateBody === undefined) || isUpdateBody) {

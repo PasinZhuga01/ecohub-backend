@@ -1,4 +1,4 @@
-import { ErrorPayload } from 'ecohub-shared/types/http';
+import { ErrorPayload } from 'ecohub-shared/http/types';
 
 abstract class BaseError extends Error {
 	protected constructor(name: string, message: string) {
