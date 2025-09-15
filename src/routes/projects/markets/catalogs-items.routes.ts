@@ -1,31 +1,21 @@
-import { Router } from 'express';
-import { CatalogsItems as Schemas } from 'ecohub-shared/schemas/requests';
-import { createRequestSchemaValidator, verifySessionToken as verifySessionTokenMiddleware } from '@middlewares/index';
-import { getCatalogsItems as getCatalogsItemsQuerySchema, removeEntity } from '@middlewares/schemas';
+import { catalogsItemsApi } from 'ecohub-shared/schemas/api';
+import { createRequestSchemaValidator, verifySessionToken } from '@middlewares/index';
 import {
 	get as getController,
 	create as createController,
 	edit as editController,
 	remove as removeController
 } from '@controllers/projects/markets/catalogs-items.controllers';
+import { createRouter } from '@routes/router';
 
-const router = Router();
-
-router.get(
-	'/get',
-	createRequestSchemaValidator(getCatalogsItemsQuerySchema, true),
-	createRequestSchemaValidator(Schemas.get),
-	verifySessionTokenMiddleware,
-	getController
-);
-router.post('/create', createRequestSchemaValidator(Schemas.create), verifySessionTokenMiddleware, createController);
-router.patch('/edit', createRequestSchemaValidator(Schemas.edit), verifySessionTokenMiddleware, editController);
-router.delete(
-	'/remove',
-	createRequestSchemaValidator(removeEntity, true),
-	createRequestSchemaValidator(Schemas.remove),
-	verifySessionTokenMiddleware,
-	removeController
-);
-
-export default router;
+export default createRouter(catalogsItemsApi, {
+	'/get': (body, raw) => [createRequestSchemaValidator(raw, true), createRequestSchemaValidator(body), verifySessionToken, getController],
+	'/create': (body) => [createRequestSchemaValidator(body), verifySessionToken, createController],
+	'/edit': (body) => [createRequestSchemaValidator(body), verifySessionToken, editController],
+	'/remove': (body, raw) => [
+		createRequestSchemaValidator(raw, true),
+		createRequestSchemaValidator(body),
+		verifySessionToken,
+		removeController
+	]
+});

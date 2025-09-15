@@ -1,26 +1,51 @@
-import { Projects as Requests } from 'ecohub-shared/schemas/requests';
-import { Projects as Responses } from 'ecohub-shared/schemas/responses';
-import { getProjectsForNav, getProjectsForPage, createProject, renameProject, removeProject } from '@services/projects/index.services';
+import { ProjectsApi, Request as RequestBody, Response as ResponseBody } from 'ecohub-shared/schemas/api';
+import {
+	getProjectsForNav,
+	getProjectsForPage,
+	createProject,
+	renameProject,
+	removeProject,
+	getProjectOrThrow
+} from '@services/projects/index.services';
 
 import { safePayload } from '../utils';
 import { Request, ResponseWithSession } from '../types';
 
-export async function getNav(req: Request<Requests.GetNavRequest>, res: ResponseWithSession<Responses.GetNavResponse>) {
+export async function getNav(
+	req: Request<RequestBody<ProjectsApi, '/get_nav'>>,
+	res: ResponseWithSession<ResponseBody<ProjectsApi, '/get_nav'>>
+) {
 	await safePayload(res, async () => await getProjectsForNav(res.locals.userId, req.body.maxCount));
 }
 
-export async function getPage(_: Request<object>, res: ResponseWithSession<Responses.GetPageResponse>) {
+export async function getPage(
+	_: Request<RequestBody<ProjectsApi, '/get_page'>>,
+	res: ResponseWithSession<ResponseBody<ProjectsApi, '/get_page'>>
+) {
 	await safePayload(res, async () => await getProjectsForPage(res.locals.userId));
 }
 
-export async function create(req: Request<Requests.CreateRequest>, res: ResponseWithSession<Responses.CreateResponse>) {
+export async function get(req: Request<RequestBody<ProjectsApi, '/get'>>, res: ResponseWithSession<ResponseBody<ProjectsApi, '/get'>>) {
+	await safePayload(res, async () => ({ name: (await getProjectOrThrow(req.body.id)).name }));
+}
+
+export async function create(
+	req: Request<RequestBody<ProjectsApi, '/create'>>,
+	res: ResponseWithSession<ResponseBody<ProjectsApi, '/create'>>
+) {
 	await safePayload(res, async () => await createProject(res.locals.userId, req.body.name));
 }
 
-export async function rename(req: Request<Requests.RenameRequest>, res: ResponseWithSession<Responses.RenameResponse>) {
+export async function rename(
+	req: Request<RequestBody<ProjectsApi, '/rename'>>,
+	res: ResponseWithSession<ResponseBody<ProjectsApi, '/rename'>>
+) {
 	await safePayload(res, async () => ({ name: await renameProject(res.locals.userId, req.body.id, req.body.name) }));
 }
 
-export async function remove(req: Request<Requests.RemoveRequest>, res: ResponseWithSession<Responses.RemoveResponse>) {
+export async function remove(
+	req: Request<RequestBody<ProjectsApi, '/remove'>>,
+	res: ResponseWithSession<ResponseBody<ProjectsApi, '/remove'>>
+) {
 	await safePayload(res, async () => ({ success: await removeProject(res.locals.userId, req.body.id) }));
 }

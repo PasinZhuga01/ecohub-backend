@@ -1,26 +1,34 @@
-import { CartsItems as Requests } from 'ecohub-shared/schemas/requests';
-import { CartsItems as Responses } from 'ecohub-shared/schemas/responses';
+import { CartsItemsApi, Request as RequestBody, Response as ResponseBody } from 'ecohub-shared/schemas/api';
 import { getItems, addItem, recountItem, removeItem, clearItems } from '@services/projects/markets/carts-items.services';
 
 import { safePayload } from '../../utils';
 import { Request, ResponseWithSession } from '../../types';
 
-export async function get(req: Request<Requests.GetRequest>, res: ResponseWithSession<Responses.GetResponse>) {
+export async function get(req: Request<RequestBody<CartsItemsApi, '/get'>>, res: ResponseWithSession<ResponseBody<CartsItemsApi, '/get'>>) {
 	await safePayload(res, async () => await getItems(res.locals.userId, req.body.marketId));
 }
 
-export async function add(req: Request<Requests.AddRequest>, res: ResponseWithSession<Responses.AddResponse>) {
+export async function add(req: Request<RequestBody<CartsItemsApi, '/add'>>, res: ResponseWithSession<ResponseBody<CartsItemsApi, '/add'>>) {
 	await safePayload(res, async () => await addItem(res.locals.userId, req.body.marketId, req.body.catalogItemId));
 }
 
-export async function recount(req: Request<Requests.RecountRequest>, res: ResponseWithSession<Responses.RecountResponse>) {
+export async function recount(
+	req: Request<RequestBody<CartsItemsApi, '/recount'>>,
+	res: ResponseWithSession<ResponseBody<CartsItemsApi, '/recount'>>
+) {
 	await safePayload(res, async () => ({ count: await recountItem(res.locals.userId, req.body.id, req.body.count) }));
 }
 
-export async function remove(req: Request<Requests.RemoveRequest>, res: ResponseWithSession<Responses.RemoveResponse>) {
+export async function remove(
+	req: Request<RequestBody<CartsItemsApi, '/remove'>>,
+	res: ResponseWithSession<ResponseBody<CartsItemsApi, '/remove'>>
+) {
 	await safePayload(res, async () => ({ success: await removeItem(res.locals.userId, req.body.id) }));
 }
 
-export async function clear(req: Request<Requests.ClearRequest>, res: ResponseWithSession<Responses.ClearResponse>) {
+export async function clear(
+	req: Request<RequestBody<CartsItemsApi, '/clear'>>,
+	res: ResponseWithSession<ResponseBody<CartsItemsApi, '/clear'>>
+) {
 	await safePayload(res, async () => ({ success: await clearItems(res.locals.userId, req.body.marketId) }));
 }

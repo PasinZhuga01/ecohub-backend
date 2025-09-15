@@ -1,11 +1,10 @@
-import { Profiles as Requests } from 'ecohub-shared/schemas/requests';
-import { Profiles as Responses } from 'ecohub-shared/schemas/responses';
+import { ProfilesApi, Request as RequestBody, Response as ResponseBody } from 'ecohub-shared/schemas/api';
 import { registerUser, loginUser, getUserLogin } from '@services/profiles.services';
 
 import { safePayload } from './utils';
 import { Request, Response, ResponseWithSession } from './types';
 
-export async function auth(req: Request<Requests.AuthRequest>, res: Response<Responses.AuthResponse>) {
+export async function auth(req: Request<RequestBody<ProfilesApi, '/auth'>>, res: Response<ResponseBody<ProfilesApi, '/auth'>>) {
 	await safePayload(res, async () => {
 		const { isRegister, login, password } = req.body;
 
@@ -17,7 +16,7 @@ export async function auth(req: Request<Requests.AuthRequest>, res: Response<Res
 	});
 }
 
-export async function get(_: Request<object>, res: ResponseWithSession<Responses.GetResponse>) {
+export async function get(_: Request<RequestBody<ProfilesApi, '/get'>>, res: ResponseWithSession<ResponseBody<ProfilesApi, '/get'>>) {
 	await safePayload(res, async () => {
 		return { login: await getUserLogin(res.locals.userId) };
 	});

@@ -1,33 +1,30 @@
-import { Router } from 'express';
-import { Projects as Schemas } from 'ecohub-shared/schemas/requests';
-import { createRequestSchemaValidator, verifySessionToken as verifySessionTokenMiddleware } from '@middlewares/index';
-import { getNavProjects as getNavProjectsQuerySchema, removeEntity } from '@middlewares/schemas';
+import { projectsApi } from 'ecohub-shared/schemas/api';
+import { createRouter } from '@routes/router';
+import { createRequestSchemaValidator, verifySessionToken } from '@middlewares/index';
 import {
 	getNav as getNavController,
 	getPage as getPageController,
+	get as getController,
 	create as createController,
 	rename as renameController,
 	remove as removeController
 } from '@controllers/projects/index.controllers';
 
-const router = Router();
-
-router.get(
-	'/get_nav',
-	createRequestSchemaValidator(getNavProjectsQuerySchema, true),
-	createRequestSchemaValidator(Schemas.getNav),
-	verifySessionTokenMiddleware,
-	getNavController
-);
-router.get('/get_page', verifySessionTokenMiddleware, getPageController);
-router.post('/create', createRequestSchemaValidator(Schemas.create), verifySessionTokenMiddleware, createController);
-router.patch('/rename', createRequestSchemaValidator(Schemas.rename), verifySessionTokenMiddleware, renameController);
-router.delete(
-	'/remove',
-	createRequestSchemaValidator(removeEntity, true),
-	createRequestSchemaValidator(Schemas.remove),
-	verifySessionTokenMiddleware,
-	removeController
-);
-
-export default router;
+export default createRouter(projectsApi, {
+	'/get_nav': (body, raw) => [
+		createRequestSchemaValidator(raw, true),
+		createRequestSchemaValidator(body),
+		verifySessionToken,
+		getNavController
+	],
+	'/get_page': () => [verifySessionToken, getPageController],
+	'/get': (body, raw) => [createRequestSchemaValidator(raw, true), createRequestSchemaValidator(body), verifySessionToken, getController],
+	'/create': (body) => [createRequestSchemaValidator(body), verifySessionToken, createController],
+	'/rename': (body) => [createRequestSchemaValidator(body), verifySessionToken, renameController],
+	'/remove': (body, raw) => [
+		createRequestSchemaValidator(raw, true),
+		createRequestSchemaValidator(body),
+		verifySessionToken,
+		removeController
+	]
+});

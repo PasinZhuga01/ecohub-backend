@@ -1,11 +1,9 @@
-import { Router } from 'express';
-import { Profiles as Schemas } from 'ecohub-shared/schemas/requests';
-import { createRequestSchemaValidator, verifySessionToken as verifySessionTokenMiddleware } from '@middlewares/index';
+import { profilesApi } from 'ecohub-shared/schemas/api';
+import { createRequestSchemaValidator, verifySessionToken } from '@middlewares/index';
 import { auth as authController, get as getController } from '@controllers/profiles.controllers';
+import { createRouter } from '@routes/router';
 
-const router = Router();
-
-router.post('/auth', createRequestSchemaValidator(Schemas.auth), authController);
-router.get('/get', verifySessionTokenMiddleware, getController);
-
-export default router;
+export default createRouter(profilesApi, {
+	'/auth': (body) => [createRequestSchemaValidator(body), authController],
+	'/get': () => [verifySessionToken, getController]
+});

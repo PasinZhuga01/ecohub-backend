@@ -1,7 +1,6 @@
-import { Router } from 'express';
-import { Currencies as Schemas } from 'ecohub-shared/schemas/requests';
-import { createRequestSchemaValidator, verifySessionToken as verifySessionTokenMiddleware } from '@middlewares/index';
-import { getCurrencies as getCurrenciesQuerySchema, removeEntity, createCurrency } from '@middlewares/schemas';
+import { currenciesApi } from 'ecohub-shared/schemas/api';
+import { createRouter } from '@routes/router';
+import { createRequestSchemaValidator, verifySessionToken } from '@middlewares/index';
 import {
 	get as getController,
 	create as createController,
@@ -11,31 +10,21 @@ import {
 } from '@controllers/projects/currencies.controllers';
 import multer from '@config/multer';
 
-const router = Router();
-
-router.get(
-	'/get',
-	createRequestSchemaValidator(getCurrenciesQuerySchema, true),
-	createRequestSchemaValidator(Schemas.get),
-	verifySessionTokenMiddleware,
-	getController
-);
-router.post(
-	'/create',
-	multer.single('icon'),
-	createRequestSchemaValidator(createCurrency, false, true),
-	createRequestSchemaValidator(Schemas.create),
-	verifySessionTokenMiddleware,
-	createController
-);
-router.patch('/rerate', createRequestSchemaValidator(Schemas.rerate), verifySessionTokenMiddleware, rerateController);
-router.delete(
-	'/remove',
-	createRequestSchemaValidator(removeEntity, true),
-	createRequestSchemaValidator(Schemas.remove),
-	verifySessionTokenMiddleware,
-	removeController
-);
-router.patch('/shift', createRequestSchemaValidator(Schemas.shift), verifySessionTokenMiddleware, shiftController);
-
-export default router;
+export default createRouter(currenciesApi, {
+	'/get': (body, raw) => [createRequestSchemaValidator(raw, true), createRequestSchemaValidator(body), verifySessionToken, getController],
+	'/create': (body, raw) => [
+		multer.single('icon'),
+		createRequestSchemaValidator(raw, false, true),
+		createRequestSchemaValidator(body),
+		verifySessionToken,
+		createController
+	],
+	'/rerate': (body) => [createRequestSchemaValidator(body), verifySessionToken, rerateController],
+	'/remove': (body, raw) => [
+		createRequestSchemaValidator(raw, true),
+		createRequestSchemaValidator(body),
+		verifySessionToken,
+		removeController
+	],
+	'/shift': (body) => [createRequestSchemaValidator(body), verifySessionToken, shiftController]
+});

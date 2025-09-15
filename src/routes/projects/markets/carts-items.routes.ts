@@ -1,7 +1,5 @@
-import { Router } from 'express';
-import { CartsItems as Schemas } from 'ecohub-shared/schemas/requests';
-import { createRequestSchemaValidator, verifySessionToken as verifySessionTokenMiddleware } from '@middlewares/index';
-import { clearCartsItems, getCartsItems as getCartsItemsQuerySchema, removeEntity } from '@middlewares/schemas';
+import { cartsItemsApi } from 'ecohub-shared/schemas/api';
+import { createRequestSchemaValidator, verifySessionToken } from '@middlewares/index';
 import {
 	get as getController,
 	add as addController,
@@ -9,31 +7,22 @@ import {
 	remove as removeController,
 	clear as clearController
 } from '@controllers/projects/markets/carts-items.controllers';
+import { createRouter } from '@routes/router';
 
-const router = Router();
-
-router.get(
-	'/get',
-	createRequestSchemaValidator(getCartsItemsQuerySchema, true),
-	createRequestSchemaValidator(Schemas.get),
-	verifySessionTokenMiddleware,
-	getController
-);
-router.post('/add', createRequestSchemaValidator(Schemas.add), verifySessionTokenMiddleware, addController);
-router.patch('/recount', createRequestSchemaValidator(Schemas.recount), verifySessionTokenMiddleware, recountController);
-router.delete(
-	'/remove',
-	createRequestSchemaValidator(removeEntity, true),
-	createRequestSchemaValidator(Schemas.remove),
-	verifySessionTokenMiddleware,
-	removeController
-);
-router.delete(
-	'/clear',
-	createRequestSchemaValidator(clearCartsItems, true),
-	createRequestSchemaValidator(Schemas.clear),
-	verifySessionTokenMiddleware,
-	clearController
-);
-
-export default router;
+export default createRouter(cartsItemsApi, {
+	'/get': (body, raw) => [createRequestSchemaValidator(raw, true), createRequestSchemaValidator(body), verifySessionToken, getController],
+	'/add': (body) => [createRequestSchemaValidator(body), verifySessionToken, addController],
+	'/recount': (body) => [createRequestSchemaValidator(body), verifySessionToken, recountController],
+	'/remove': (body, raw) => [
+		createRequestSchemaValidator(raw, true),
+		createRequestSchemaValidator(body),
+		verifySessionToken,
+		removeController
+	],
+	'/clear': (body, raw) => [
+		createRequestSchemaValidator(raw, true),
+		createRequestSchemaValidator(body),
+		verifySessionToken,
+		clearController
+	]
+});

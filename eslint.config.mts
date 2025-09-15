@@ -26,16 +26,17 @@ export default tseslint.config(
 			}
 		},
 		rules: {
+			'@typescript-eslint/no-explicit-any': 'off',
 			'import/order': [
 				'error',
 				{
 					groups: [
 						'builtin', // Node.js modules: fs, path
 						'external', // npm packages: express, uuid
-						'internal', // aliases: @app/, ecohub-shared
+						'internal', // aliases: @app
 						'index', // ./ (index.ts)
 						'sibling', // ./file.ts
-						'parent' // ../file.ts, ../../file.ts и глубже
+						'parent' // ../file.ts, ../../file.ts
 					],
 					pathGroups: [
 						{ pattern: './**', group: 'sibling' },
