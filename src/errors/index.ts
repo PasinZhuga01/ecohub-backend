@@ -1,17 +1,5 @@
 import { ErrorPayload } from 'ecohub-shared/http/types';
-
-abstract class BaseError extends Error {
-	protected constructor(name: string, message: string) {
-		super(message);
-		this.name = name;
-	}
-}
-
-export class DatabaseError extends BaseError {
-	public constructor(message: string) {
-		super('DatabaseError', message);
-	}
-}
+import { BaseError } from 'ecohub-shared/errors';
 
 export class PayloadError extends BaseError {
 	public readonly payload: ErrorPayload;
