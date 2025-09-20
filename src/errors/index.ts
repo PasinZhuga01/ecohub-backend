@@ -1,4 +1,4 @@
-import { ErrorPayload } from 'ecohub-shared/http/types';
+import { ErrorPayload } from 'ecohub-shared/http/payloads';
 import { BaseError } from 'ecohub-shared/errors';
 
 export class PayloadError extends BaseError {

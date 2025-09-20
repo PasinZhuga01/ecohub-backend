@@ -1,8 +1,7 @@
 import { z } from 'zod';
 import jwt, { TokenExpiredError } from 'jsonwebtoken';
 import { NextFunction, Request, RequestHandler, Response } from 'express';
-import codes from 'ecohub-shared/http/codes';
-import { ErrorPayload } from 'ecohub-shared/http/types';
+import { codes, ErrorPayload } from 'ecohub-shared/http/payloads';
 import env from '@config/env';
 
 export function createRequestSchemaValidator(

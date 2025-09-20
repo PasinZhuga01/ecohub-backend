@@ -1,5 +1,5 @@
 import { Request as ExpressRequest, Response as ExpressResponse } from 'express';
-import { ErrorPayload } from 'ecohub-shared/http/types';
+import { ErrorPayload } from 'ecohub-shared/http/payloads';
 
 export type Request<B extends object> = ExpressRequest<object, object, B>;
 

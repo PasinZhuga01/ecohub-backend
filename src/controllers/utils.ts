@@ -1,5 +1,5 @@
-import codes from 'ecohub-shared/http/codes';
-import { PayloadError } from '@errors/index';
+import { codes } from 'ecohub-shared/http/payloads';
+import { PayloadError } from '@errors';
 
 import { Response } from './types';
 

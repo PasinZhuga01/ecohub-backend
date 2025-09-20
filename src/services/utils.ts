@@ -1,5 +1,5 @@
-import { ErrorPayload, Resource } from 'ecohub-shared/http/types';
-import { PayloadError } from '@errors/index';
+import { ErrorPayload, Resource } from 'ecohub-shared/http/payloads';
+import { PayloadError } from '@errors';
 
 export async function getEntityOrThrow<T extends object>(entity: T | null, resource: Resource): Promise<T> {
 	if (entity === null) {

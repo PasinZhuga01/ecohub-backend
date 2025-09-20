@@ -1,11 +1,9 @@
-import Router from 'express';
+import { createRootRouter } from './utils';
+import profilesRouter from './profiles/profiles.routes';
+import projectsRouter from './projects/projects.routes';
+import currenciesRouter from './projects/currencies/currencies.routes';
+import marketsRouter from './projects/markets/markets.routes';
+import catalogsItemsRouter from './projects/markets/catalogs-items/catalogs-items.routes';
+import cartsItemsRouter from './projects/markets/carts-items/carts-items.routes';
 
-import profilesRouter from './profiles.routes';
-import projectsRouters from './projects';
-
-const router = Router();
-
-router.use('/profiles', profilesRouter);
-router.use('/projects', projectsRouters);
-
-export default router;
+export default createRootRouter(profilesRouter, projectsRouter, currenciesRouter, marketsRouter, catalogsItemsRouter, cartsItemsRouter);
