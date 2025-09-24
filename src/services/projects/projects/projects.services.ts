@@ -2,7 +2,8 @@ import { ProjectObject } from 'ecohub-shared/db/projects';
 import { Projects as Models } from '@models/projects';
 import { PayloadError } from '@errors';
 
-import { toProjectNavObject, toProjectPageObject, ProjectNavObject, ProjectPageObject } from './projects.services.schemas';
+import { ProjectNavObject, ProjectPageObject } from './projects.services.types';
+import { toProjectNavObject, toProjectPageObject } from './projects.services.utils';
 
 import { getMarketsForNav } from '../markets/markets/markets.services';
 import { getEntityOrThrow, assertEntityNotExist } from '../../utils';

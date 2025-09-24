@@ -2,7 +2,8 @@ import { CatalogItemObject as CatalogItemBaseObject } from 'ecohub-shared/db/pro
 import { CatalogsItems as Models } from '@models/projects/markets';
 import { PayloadError } from '@errors';
 
-import { toCatalogItemObject, CatalogItemObject } from './catalogs-items.services.schemas';
+import { CatalogItemObject } from './catalogs-items.services.types';
+import { toCatalogItemObject } from './catalogs-items.services.utils';
 
 import { assertUserAccessToMarket, updateMarketInteractedAt } from '../markets/markets.services';
 import { getEntityOrThrow, assertEntityNotExist } from '../../../utils';

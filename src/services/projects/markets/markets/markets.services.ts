@@ -1,7 +1,8 @@
 import { MarketObject } from 'ecohub-shared/db/projects/markets';
 import { Markets as Models } from '@models/projects/markets';
 
-import { MarketNavObject, MarketPageObject, toMarketNavObject, toMarketPageObject } from './markets.services.schemas';
+import { MarketNavObject, MarketPageObject } from './markets.services.types';
+import { toMarketNavObject, toMarketPageObject } from './markets.services.utils';
 
 import { assertEntityNotExist, getEntityOrThrow } from '../../../utils';
 import { assertUserAccessToProject, updateProjectInteractedAt } from '../../projects/projects.services';

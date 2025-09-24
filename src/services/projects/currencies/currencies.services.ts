@@ -6,7 +6,8 @@ import { CurrencyObject as CurrencyBaseObject } from 'ecohub-shared/db/projects'
 import { Currencies as Models } from '@models/projects';
 import env from '@config/env';
 
-import { toCurrencyObject, CurrencyObject } from './currencies.services.schemas';
+import { CurrencyObject } from './currencies.services.types';
+import { toCurrencyObject } from './currencies.services.utils';
 
 import { assertUserAccessToProject, updateProjectInteractedAt } from '../projects/projects.services';
 import { getMarketsForPage } from '../markets/markets/markets.services';

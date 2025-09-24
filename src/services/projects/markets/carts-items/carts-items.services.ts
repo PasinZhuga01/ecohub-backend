@@ -1,7 +1,8 @@
 import { CartItemObject as CartItemBaseObject } from 'ecohub-shared/db/projects/markets';
 import { CartsItems as Models } from '@models/projects/markets';
 
-import { toCartItemObject, CartItemObject } from './carts-items.services.schemas';
+import { CartItemObject } from './carts-items.services.types';
+import { toCartItemObject } from './carts-items.services.utils';
 
 import { assertMarketAccessToItem } from '../catalogs-items/catalogs-items.services';
 import { assertUserAccessToMarket, updateMarketInteractedAt } from '../markets/markets.services';
