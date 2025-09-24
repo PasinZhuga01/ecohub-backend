@@ -1,6 +1,6 @@
 import { cartsItemsApi } from 'ecohub-shared/http/api/projects/markets';
 import { createRequestSchemaValidator, verifySessionToken } from '@middlewares';
-import { CartsItems as Controllers } from '@controllers';
+import { CartsItems as Controllers } from '@controllers/projects/markets';
 
 import { createRouter } from '../../../utils';
 

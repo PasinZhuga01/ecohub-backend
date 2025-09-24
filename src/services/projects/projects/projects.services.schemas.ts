@@ -1,8 +1,7 @@
 import { ProjectObject } from 'ecohub-shared/db/projects';
 
-import { MarketNavObject } from './markets/markets.services.schemas';
-
-import { pickObject, toStringDate } from '../utils';
+import { MarketNavObject } from '../markets/markets/markets.services.schemas';
+import { pickObject, toStringDate } from '../../utils';
 
 export type ProjectNavObject = Pick<ProjectObject, 'id' | 'name'> & { markets: MarketNavObject[] };
 export type ProjectPageObject = Pick<ProjectObject, 'id' | 'name'> & { interactedAt: string };

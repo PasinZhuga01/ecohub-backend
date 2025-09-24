@@ -1,6 +1,6 @@
 import { marketSchema, MarketObject } from 'ecohub-shared/db/projects/markets';
 
-import { ModelsUtility } from '../../utility';
+import { ModelsUtility } from '../../../utility';
 
 const utility = new ModelsUtility<MarketObject, 'project_id' | 'name'>(marketSchema, 'markets', 'market');
 

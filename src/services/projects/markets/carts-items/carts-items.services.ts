@@ -1,10 +1,10 @@
 import { CartItemObject as CartItemBaseObject } from 'ecohub-shared/db/projects/markets';
-import { CartsItems as Models } from '@models';
+import { CartsItems as Models } from '@models/projects/markets';
 
 import { toCartItemObject, CartItemObject } from './carts-items.services.schemas';
 
 import { assertMarketAccessToItem } from '../catalogs-items/catalogs-items.services';
-import { assertUserAccessToMarket, updateMarketInteractedAt } from '../markets.services';
+import { assertUserAccessToMarket, updateMarketInteractedAt } from '../markets/markets.services';
 import { getEntityOrThrow } from '../../../utils';
 
 export async function getItemOrThrow(id: number): Promise<CartItemBaseObject> {

@@ -1,8 +1,8 @@
 import { projectsApi } from 'ecohub-shared/http/api/projects';
 import { createRequestSchemaValidator, verifySessionToken } from '@middlewares';
-import { Projects as Controllers } from '@controllers';
+import { Projects as Controllers } from '@controllers/projects';
 
-import { createRouter } from '../utils';
+import { createRouter } from '../../utils';
 
 export default createRouter(projectsApi, {
 	'/get_nav': (body, raw) => [

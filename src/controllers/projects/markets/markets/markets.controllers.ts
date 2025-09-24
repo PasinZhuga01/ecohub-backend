@@ -1,9 +1,9 @@
 import { Request as RequestBody, Response as ResponseBody } from 'ecohub-shared/http/api';
 import { MarketsApi } from 'ecohub-shared/http/api/projects/markets';
-import { Markets as Services } from '@services';
+import { Markets as Services } from '@services/projects/markets';
 
-import { safePayload } from '../../utils';
-import { Request, ResponseWithSession } from '../../types';
+import { safePayload } from '../../../utils';
+import { Request, ResponseWithSession } from '../../../types';
 
 export async function getList(
 	req: Request<RequestBody<MarketsApi, '/get_list'>>,

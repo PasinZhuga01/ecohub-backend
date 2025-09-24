@@ -3,13 +3,13 @@ import path from 'path';
 
 import { v4 as uuidv4 } from 'uuid';
 import { CurrencyObject as CurrencyBaseObject } from 'ecohub-shared/db/projects';
-import { Currencies as Models } from '@models';
+import { Currencies as Models } from '@models/projects';
 import env from '@config/env';
 
 import { toCurrencyObject, CurrencyObject } from './currencies.services.schemas';
 
-import { assertUserAccessToProject, updateProjectInteractedAt } from '../projects.services';
-import { getMarketsForPage } from '../markets/markets.services';
+import { assertUserAccessToProject, updateProjectInteractedAt } from '../projects/projects.services';
+import { getMarketsForPage } from '../markets/markets/markets.services';
 import { shiftItemsPrices } from '../markets/catalogs-items/catalogs-items.services';
 import { getEntityOrThrow, assertEntityNotExist } from '../../utils';
 

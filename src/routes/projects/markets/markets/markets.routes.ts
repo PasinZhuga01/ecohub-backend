@@ -1,8 +1,8 @@
 import { marketsApi } from 'ecohub-shared/http/api/projects/markets';
 import { createRequestSchemaValidator, verifySessionToken } from '@middlewares';
-import { Markets as Controllers } from '@controllers';
+import { Markets as Controllers } from '@controllers/projects/markets';
 
-import { createRouter } from '../../utils';
+import { createRouter } from '../../../utils';
 
 export default createRouter(marketsApi, {
 	'/get_list': (body, raw) => [

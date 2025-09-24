@@ -6,14 +6,24 @@
 		"moduleResolution": "node16",
 		"baseUrl": "./src",
 		"paths": {
-			"@config/*": ["config/*"],
-			"@controllers": ["controllers"],
-			"@errors": ["errors"],
-			"@middlewares": ["middlewares"],
-			"@models": ["models"],
-			"@routes": ["routes"],
-			"@services": ["services"],
-			"@utils/*": ["utils/*"]
+			"@config/*": ["./config/*"],
+
+			"@controllers": ["./controllers"],
+			"@controllers/projects": ["./controllers/projects"],
+			"@controllers/projects/markets": ["./controllers/projects/markets"],
+
+			"@services": ["./services"],
+			"@services/projects": ["./services/projects"],
+			"@services/projects/markets": ["./services/projects/markets"],
+
+			"@models": ["./models"],
+			"@models/projects": ["./models/projects"],
+			"@models/projects/markets": ["./models/projects/markets"],
+
+			"@errors": ["./errors"],
+			"@middlewares": ["./middlewares"],
+			"@routes": ["./routes"],
+			"@utils/*": ["./utils/*"]
 		},
 		"outDir": "./dist",
 		"esModuleInterop": true,

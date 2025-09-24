@@ -1,11 +1,11 @@
 import { ProjectObject } from 'ecohub-shared/db/projects';
-import { Projects as Models } from '@models';
+import { Projects as Models } from '@models/projects';
 import { PayloadError } from '@errors';
 
 import { toProjectNavObject, toProjectPageObject, ProjectNavObject, ProjectPageObject } from './projects.services.schemas';
-import { getMarketsForNav } from './markets/markets.services';
 
-import { getEntityOrThrow, assertEntityNotExist } from '../utils';
+import { getMarketsForNav } from '../markets/markets/markets.services';
+import { getEntityOrThrow, assertEntityNotExist } from '../../utils';
 
 export async function getProjectOrThrow(id: number): Promise<ProjectObject> {
 	return await getEntityOrThrow(await Models.getProject(id), 'project');

@@ -1,9 +1,9 @@
 import { Request as RequestBody, Response as ResponseBody } from 'ecohub-shared/http/api';
 import { ProjectsApi } from 'ecohub-shared/http/api/projects';
-import { Projects as Services } from '@services';
+import { Projects as Services } from '@services/projects';
 
-import { safePayload } from '../utils';
-import { Request, ResponseWithSession } from '../types';
+import { safePayload } from '../../utils';
+import { Request, ResponseWithSession } from '../../types';
 
 export async function getNav(
 	req: Request<RequestBody<ProjectsApi, '/get_nav'>>,

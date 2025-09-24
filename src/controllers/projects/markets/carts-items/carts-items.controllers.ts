@@ -1,6 +1,6 @@
 import { Request as RequestBody, Response as ResponseBody } from 'ecohub-shared/http/api';
 import { CartsItemsApi } from 'ecohub-shared/http/api/projects/markets';
-import { CartsItems as Services } from '@services';
+import { CartsItems as Services } from '@services/projects/markets';
 
 import { safePayload } from '../../../utils';
 import { Request, ResponseWithSession } from '../../../types';

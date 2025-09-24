@@ -1,6 +1,6 @@
 import { projectSchema, ProjectObject } from 'ecohub-shared/db/projects';
 
-import { ModelsUtility } from '../utility';
+import { ModelsUtility } from '../../utility';
 
 const utility = new ModelsUtility<ProjectObject, 'user_id' | 'name'>(projectSchema, 'projects', 'project');
 

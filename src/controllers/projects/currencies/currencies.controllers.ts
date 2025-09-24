@@ -1,6 +1,6 @@
 import { Request as RequestBody, Response as ResponseBody } from 'ecohub-shared/http/api';
 import { CurrenciesApi } from 'ecohub-shared/http/api/projects';
-import { Currencies as Services } from '@services';
+import { Currencies as Services } from '@services/projects';
 
 import { safePayload } from '../../utils';
 import { Request, ResponseWithSession } from '../../types';
