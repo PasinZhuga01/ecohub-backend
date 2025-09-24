@@ -1,14 +1,9 @@
+import { currencySchema, CurrencyObject } from 'ecohub-shared/db/projects';
 import db from '@config/db';
-
-import { currencySchema, CurrencyObject } from './currencies.models.schemas';
 
 import { ModelsUtility } from '../../utility';
 
-const utility = new ModelsUtility<typeof currencySchema, 'project_id' | 'icon_src' | 'name' | 'rate'>(
-	currencySchema,
-	'currencies',
-	'currency'
-);
+const utility = new ModelsUtility<CurrencyObject, 'project_id' | 'icon_src' | 'name' | 'rate'>(currencySchema, 'currencies', 'currency');
 
 export async function getCurrency(id: number): Promise<CurrencyObject | null>;
 export async function getCurrency(projectId: number, name: string): Promise<CurrencyObject | null>;

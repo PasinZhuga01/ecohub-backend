@@ -1,4 +1,4 @@
-import { marketsApi } from 'ecohub-shared/http/api';
+import { marketsApi } from 'ecohub-shared/http/api/projects/markets';
 import { createRequestSchemaValidator, verifySessionToken } from '@middlewares';
 import { Markets as Controllers } from '@controllers';
 

@@ -1,4 +1,5 @@
-import { CatalogsItemsApi, Request as RequestBody, Response as ResponseBody } from 'ecohub-shared/http/api';
+import { Request as RequestBody, Response as ResponseBody } from 'ecohub-shared/http/api';
+import { CatalogsItemsApi } from 'ecohub-shared/http/api/projects/markets';
 import { CatalogsItems as Services } from '@services';
 
 import { safePayload } from '../../../utils';

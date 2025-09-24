@@ -1,4 +1,5 @@
-import { MarketsApi, Request as RequestBody, Response as ResponseBody } from 'ecohub-shared/http/api';
+import { Request as RequestBody, Response as ResponseBody } from 'ecohub-shared/http/api';
+import { MarketsApi } from 'ecohub-shared/http/api/projects/markets';
 import { Markets as Services } from '@services';
 
 import { safePayload } from '../../utils';

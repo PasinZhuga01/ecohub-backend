@@ -1,8 +1,8 @@
-import { projectSchema, ProjectObject } from './projects.models.schemas';
+import { projectSchema, ProjectObject } from 'ecohub-shared/db/projects';
 
 import { ModelsUtility } from '../utility';
 
-const utility = new ModelsUtility<typeof projectSchema, 'user_id' | 'name'>(projectSchema, 'projects', 'project');
+const utility = new ModelsUtility<ProjectObject, 'user_id' | 'name'>(projectSchema, 'projects', 'project');
 
 export async function getProject(id: number): Promise<ProjectObject | null>;
 export async function getProject(userId: number, name: string): Promise<ProjectObject | null>;

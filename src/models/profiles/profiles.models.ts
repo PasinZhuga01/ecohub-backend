@@ -2,7 +2,7 @@ import { userSchema, UserObject } from 'ecohub-shared/db';
 
 import { ModelsUtility } from '../utility';
 
-const utility = new ModelsUtility<typeof userSchema, 'login' | 'password'>(userSchema, 'users', 'user');
+const utility = new ModelsUtility<UserObject, 'login' | 'password'>(userSchema, 'users', 'user');
 
 export async function getUser(id: number): Promise<UserObject | null>;
 export async function getUser(login: string): Promise<UserObject | null>;

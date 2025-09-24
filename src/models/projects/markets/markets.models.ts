@@ -1,8 +1,8 @@
-import { marketSchema, MarketObject } from './markets.models.schemas';
+import { marketSchema, MarketObject } from 'ecohub-shared/db/projects/markets';
 
 import { ModelsUtility } from '../../utility';
 
-const utility = new ModelsUtility<typeof marketSchema, 'project_id' | 'name'>(marketSchema, 'markets', 'market');
+const utility = new ModelsUtility<MarketObject, 'project_id' | 'name'>(marketSchema, 'markets', 'market');
 
 export async function getMarket(id: number): Promise<MarketObject | null>;
 export async function getMarket(projectId: number, name: string): Promise<MarketObject | null>;

@@ -1,4 +1,5 @@
-import { CatalogsItems as Models, CatalogsItemsSchemas as Schemas } from '@models';
+import { CatalogItemObject as CatalogItemBaseObject } from 'ecohub-shared/db/projects/markets';
+import { CatalogsItems as Models } from '@models';
 import { PayloadError } from '@errors';
 
 import { toCatalogItemObject, CatalogItemObject } from './catalogs-items.services.schemas';
@@ -6,7 +7,7 @@ import { toCatalogItemObject, CatalogItemObject } from './catalogs-items.service
 import { assertUserAccessToMarket, updateMarketInteractedAt } from '../markets.services';
 import { getEntityOrThrow, assertEntityNotExist } from '../../../utils';
 
-export async function getItemOrThrow(id: number): Promise<Schemas.CatalogItemObject> {
+export async function getItemOrThrow(id: number): Promise<CatalogItemBaseObject> {
 	return await getEntityOrThrow(await Models.getItem(id), 'catalog_item');
 }
 

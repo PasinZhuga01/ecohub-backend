@@ -1,10 +1,9 @@
+import { catalogItemSchema, CatalogItemObject } from 'ecohub-shared/db/projects/markets';
 import db from '@config/db';
-
-import { catalogItemSchema, CatalogItemObject } from './catalogs-items.models.schemas';
 
 import { ModelsUtility } from '../../../utility';
 
-const utility = new ModelsUtility<typeof catalogItemSchema, 'market_id' | 'name' | 'count' | 'price'>(
+const utility = new ModelsUtility<CatalogItemObject, 'market_id' | 'name' | 'count' | 'price'>(
 	catalogItemSchema,
 	'catalogs_items',
 	'catalog item'

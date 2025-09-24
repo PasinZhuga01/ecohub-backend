@@ -1,11 +1,12 @@
-import { Markets as Models, MarketsSchemas as Schemas } from '@models';
+import { MarketObject } from 'ecohub-shared/db/projects/markets';
+import { Markets as Models } from '@models';
 
 import { MarketNavObject, MarketPageObject, toMarketNavObject, toMarketPageObject } from './markets.services.schemas';
 
 import { assertEntityNotExist, getEntityOrThrow } from '../../utils';
 import { assertUserAccessToProject, updateProjectInteractedAt } from '../projects.services';
 
-export async function getMarketOrThrow(id: number): Promise<Schemas.MarketObject> {
+export async function getMarketOrThrow(id: number): Promise<MarketObject> {
 	return await getEntityOrThrow(await Models.getMarket(id), 'market');
 }
 

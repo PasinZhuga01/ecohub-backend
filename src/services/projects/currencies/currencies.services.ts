@@ -2,7 +2,8 @@ import fs from 'fs/promises';
 import path from 'path';
 
 import { v4 as uuidv4 } from 'uuid';
-import { Currencies as Models, CurrenciesSchemas as Schemas } from '@models';
+import { CurrencyObject as CurrencyBaseObject } from 'ecohub-shared/db/projects';
+import { Currencies as Models } from '@models';
 import env from '@config/env';
 
 import { toCurrencyObject, CurrencyObject } from './currencies.services.schemas';
@@ -12,7 +13,7 @@ import { getMarketsForPage } from '../markets/markets.services';
 import { shiftItemsPrices } from '../markets/catalogs-items/catalogs-items.services';
 import { getEntityOrThrow, assertEntityNotExist } from '../../utils';
 
-export async function getCurrencyOrThrow(id: number): Promise<Schemas.CurrencyObject> {
+export async function getCurrencyOrThrow(id: number): Promise<CurrencyBaseObject> {
 	return await getEntityOrThrow(await Models.getCurrency(id), 'currency');
 }
 

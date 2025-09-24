@@ -1,4 +1,4 @@
-import { currenciesApi } from 'ecohub-shared/http/api';
+import { currenciesApi } from 'ecohub-shared/http/api/projects';
 import { createRequestSchemaValidator, verifySessionToken } from '@middlewares';
 import { Currencies as Controllers } from '@controllers';
 import multer from '@config/multer';

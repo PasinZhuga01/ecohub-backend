@@ -1,9 +1,9 @@
-import { CatalogsItemsSchemas as Schemas } from '@models';
+import { CatalogItemObject as CatalogItemBaseObject } from 'ecohub-shared/db/projects/markets';
 
 import { pickObject } from '../../../utils';
 
-export type CatalogItemObject = Pick<Schemas.CatalogItemObject, 'id' | 'name' | 'count' | 'price'>;
+export type CatalogItemObject = Pick<CatalogItemBaseObject, 'id' | 'name' | 'count' | 'price'>;
 
-export function toCatalogItemObject(object: Schemas.CatalogItemObject): CatalogItemObject {
+export function toCatalogItemObject(object: CatalogItemBaseObject): CatalogItemObject {
 	return pickObject(object, ['id', 'name', 'count', 'price']);
 }

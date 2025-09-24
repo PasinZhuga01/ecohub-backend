@@ -1,8 +1,8 @@
-import { cartItemSchema, CartItemObject } from './carts-items.models.schemas';
+import { cartItemSchema, CartItemObject } from 'ecohub-shared/db/projects/markets';
 
 import { ModelsUtility } from '../../../utility';
 
-const utility = new ModelsUtility<typeof cartItemSchema, 'market_id' | 'catalog_item_id'>(cartItemSchema, 'carts_items', 'cart item');
+const utility = new ModelsUtility<CartItemObject, 'market_id' | 'catalog_item_id'>(cartItemSchema, 'carts_items', 'cart item');
 
 export async function getItem(id: number): Promise<CartItemObject | null>;
 export async function getItem(marketId: number, catalogItemId: number): Promise<CartItemObject | null>;

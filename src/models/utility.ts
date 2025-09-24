@@ -1,31 +1,32 @@
 import { z } from 'zod';
+import { objectToCamel, ObjectToSnake } from 'ts-case-convert';
 import { IdentifiedObject } from 'ecohub-shared/db';
 import db from '@config/db';
 
 import { DatabaseError } from './errors';
 
-export class ModelsUtility<T extends z.ZodType<IdentifiedObject, IdentifiedObject>, C extends keyof z.input<T>> {
-	private readonly _schema: T;
+export class ModelsUtility<S extends IdentifiedObject, C extends keyof ObjectToSnake<S>> {
+	private readonly _schema: z.ZodType<S, S>;
 
 	private readonly _tableName: string;
 	private readonly _tableItemName: string;
 
-	public constructor(schema: T, tableName: string, tableItemName: string) {
+	public constructor(schema: z.ZodType<S, S>, tableName: string, tableItemName: string) {
 		this._schema = schema;
 		this._tableName = tableName;
 		this._tableItemName = tableItemName;
 	}
 
-	public async getEntity(data: Partial<z.input<T>>): Promise<z.output<T> | null> {
+	public async getEntity(data: Partial<ObjectToSnake<S>>): Promise<S | null> {
 		ModelsUtility._assertObjectNotEmpty(data);
 
 		return (await this.getEntities(data, { count: 1 }))[0] ?? null;
 	}
 
 	public async getEntities(
-		data: Partial<z.input<T>>,
-		options: Partial<{ orderKey: keyof z.input<T>; count: number }> = {}
-	): Promise<z.output<T>[]> {
+		data: Partial<ObjectToSnake<S>>,
+		options: Partial<{ orderKey: keyof ObjectToSnake<S>; count: number }> = {}
+	): Promise<S[]> {
 		ModelsUtility._assertObjectNotEmpty(data);
 
 		const where = ModelsUtility._toSqlClause(data);
@@ -43,10 +44,10 @@ export class ModelsUtility<T extends z.ZodType<IdentifiedObject, IdentifiedObjec
 			throw new DatabaseError(`Failed to retrieve ${this._tableItemName} list`);
 		}
 
-		return rows.map((row) => this._schema.parse(row));
+		return rows.map((row) => this._schema.parse(objectToCamel(row)));
 	}
 
-	public async createEntity(data: Pick<z.input<T>, C>): Promise<z.output<T>> {
+	public async createEntity(data: Pick<ObjectToSnake<S>, C>): Promise<S> {
 		ModelsUtility._assertObjectNotEmpty(data);
 
 		const keys = Object.keys(data).join(', ');
@@ -59,7 +60,7 @@ export class ModelsUtility<T extends z.ZodType<IdentifiedObject, IdentifiedObjec
 			throw new DatabaseError(`Failed to retrieve created ${this._tableItemName} insertId`);
 		}
 
-		const entity = await this.getEntity({ id: result.insertId } as Partial<z.input<T>>);
+		const entity = await this.getEntity({ id: result.insertId } as Partial<ObjectToSnake<S>>);
 
 		if (entity === null) {
 			throw new DatabaseError(`Failed to retrieve created ${this._tableItemName} with id = ${result.insertId}`);
@@ -68,7 +69,7 @@ export class ModelsUtility<T extends z.ZodType<IdentifiedObject, IdentifiedObjec
 		return entity;
 	}
 
-	public async updateEntities(filter: Partial<z.input<T>>, data: Partial<z.input<T>>) {
+	public async updateEntities(filter: Partial<ObjectToSnake<S>>, data: Partial<ObjectToSnake<S>>) {
 		ModelsUtility._assertObjectNotEmpty(filter);
 		ModelsUtility._assertObjectNotEmpty(data);
 
@@ -79,7 +80,7 @@ export class ModelsUtility<T extends z.ZodType<IdentifiedObject, IdentifiedObjec
 		await db.execute(`UPDATE ${this._tableName} SET ${set} WHERE ${where}`, values);
 	}
 
-	public async removeEntities(data: Partial<z.input<T>>) {
+	public async removeEntities(data: Partial<ObjectToSnake<S>>) {
 		ModelsUtility._assertObjectNotEmpty(data);
 
 		const where = ModelsUtility._toSqlClause(data);

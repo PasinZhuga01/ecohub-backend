@@ -1,4 +1,4 @@
-import { projectsApi } from 'ecohub-shared/http/api';
+import { projectsApi } from 'ecohub-shared/http/api/projects';
 import { createRequestSchemaValidator, verifySessionToken } from '@middlewares';
 import { Projects as Controllers } from '@controllers';
 
