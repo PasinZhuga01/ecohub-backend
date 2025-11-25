@@ -22,6 +22,12 @@ export async function assertUserAccessToProject(userId: number, projectId: numbe
 	}
 }
 
+export async function getAccessibleProject(userId: number, projectId: number): Promise<ProjectObject> {
+	await assertUserAccessToProject(userId, projectId);
+
+	return getProjectOrThrow(projectId);
+}
+
 export async function getProjectsForNav(userId: number, maxCount: number): Promise<ProjectNavObject[]> {
 	const projects = (await Models.getProjectsByOrderDesc(userId, maxCount)).map((project) => toProjectNavObject(project));
 

@@ -20,7 +20,7 @@ export async function getPage(
 }
 
 export async function get(req: Request<RequestBody<ProjectsApi, '/get'>>, res: ResponseWithSession<ResponseBody<ProjectsApi, '/get'>>) {
-	await safePayload(res, async () => ({ name: (await Services.getProjectOrThrow(req.body.id)).name }));
+	await safePayload(res, async () => ({ name: (await Services.getAccessibleProject(res.locals.userId, req.body.id)).name }));
 }
 
 export async function create(
