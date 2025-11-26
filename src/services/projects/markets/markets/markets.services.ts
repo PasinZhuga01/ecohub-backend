@@ -6,6 +6,7 @@ import { toMarketNavObject, toMarketPageObject } from './markets.services.utils'
 
 import { assertEntityNotExist, getEntityOrThrow } from '../../../utils';
 import { assertUserAccessToProject, updateProjectInteractedAt } from '../../projects/projects.services';
+import { assertProjectAccessToCurrency } from '../../currencies/currencies.services';
 
 export async function getMarketOrThrow(id: number): Promise<MarketObject> {
 	return await getEntityOrThrow(await Models.getMarket(id), 'market');
@@ -17,6 +18,10 @@ export async function assertMarketNotExist(projectId: number, name: string) {
 
 export async function assertUserAccessToMarket(userId: number, marketId: number) {
 	await assertUserAccessToProject(userId, (await getMarketOrThrow(marketId)).projectId);
+}
+
+export async function assertCurrencyAccessToMarket(currencyId: number, marketId: number) {
+	await assertProjectAccessToCurrency((await getMarketOrThrow(marketId)).projectId, currencyId);
 }
 
 export async function getMarketsForNav(userId: number, projectId: number, maxCount: number): Promise<MarketNavObject[]> {
@@ -37,6 +42,17 @@ export async function createMarket(userId: number, projectId: number, name: stri
 	await updateProjectInteractedAt(projectId);
 
 	return toMarketPageObject(await Models.createMarket(projectId, name));
+}
+
+export async function setMarketCurrency(userId: number, marketId: number, currencyId: number): Promise<true> {
+	await assertUserAccessToMarket(userId, marketId);
+	await assertCurrencyAccessToMarket(currencyId, marketId);
+
+	await Models.setMarketCurrency(marketId, currencyId);
+
+	await updateMarketInteractedAt(marketId);
+
+	return true;
 }
 
 export async function renameMarket(userId: number, marketId: number, name: string): Promise<string> {

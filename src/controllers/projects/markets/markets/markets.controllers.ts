@@ -23,6 +23,15 @@ export async function create(
 	await safePayload(res, async () => await Services.createMarket(res.locals.userId, req.body.projectId, req.body.name));
 }
 
+export async function setCurrency(
+	req: Request<RequestBody<MarketsApi, '/set_currency'>>,
+	res: ResponseWithSession<ResponseBody<MarketsApi, '/set_currency'>>
+) {
+	await safePayload(res, async () => ({
+		success: await Services.setMarketCurrency(res.locals.userId, req.body.marketId, req.body.currencyId)
+	}));
+}
+
 export async function rename(
 	req: Request<RequestBody<MarketsApi, '/rename'>>,
 	res: ResponseWithSession<ResponseBody<MarketsApi, '/rename'>>

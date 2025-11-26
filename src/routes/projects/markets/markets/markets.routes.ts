@@ -18,6 +18,7 @@ export default createRouter(marketsApi, {
 		Controllers.get
 	],
 	'/create': (body) => [createRequestSchemaValidator(body), verifySessionToken, Controllers.create],
+	'/set_currency': (body) => [createRequestSchemaValidator(body), verifySessionToken],
 	'/rename': (body) => [createRequestSchemaValidator(body), verifySessionToken, Controllers.rename],
 	'/remove': (body, raw) => [
 		createRequestSchemaValidator(raw, true),

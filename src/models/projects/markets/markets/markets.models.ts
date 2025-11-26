@@ -19,6 +19,10 @@ export async function createMarket(projectId: number, name: string): Promise<Mar
 	return await utility.createEntity({ project_id: projectId, name });
 }
 
+export async function setMarketCurrency(marketId: number, currencyId: number) {
+	return await utility.updateEntities({ id: marketId }, { currency_id: currencyId });
+}
+
 export async function renameMarket(id: number, name: string) {
 	await utility.updateEntities({ id }, { name });
 }

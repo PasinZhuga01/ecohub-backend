@@ -4,6 +4,7 @@ import path from 'path';
 import { v4 as uuidv4 } from 'uuid';
 import { CurrencyObject as CurrencyBaseObject } from 'ecohub-shared/db/projects';
 import { Currencies as Models } from '@models/projects';
+import { PayloadError } from '@errors';
 import env from '@config/env';
 
 import { CurrencyObject } from './currencies.services.types';
@@ -24,6 +25,12 @@ export async function assertCurrencyNotExist(projectId: number, name: string) {
 
 export async function assertUserAccessToCurrency(userId: number, currencyId: number) {
 	await assertUserAccessToProject(userId, (await getCurrencyOrThrow(currencyId)).projectId);
+}
+
+export async function assertProjectAccessToCurrency(projectId: number, currencyId: number) {
+	if ((await getCurrencyOrThrow(currencyId)).projectId !== projectId) {
+		throw new PayloadError({ code: 'INVALID_RELATIONS', details: { parent: 'project', child: 'currency' } });
+	}
 }
 
 export async function getCurrencies(userId: number, projectId: number): Promise<CurrencyObject[]> {
