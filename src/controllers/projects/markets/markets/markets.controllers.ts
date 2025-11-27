@@ -13,7 +13,11 @@ export async function getList(
 }
 
 export async function get(req: Request<RequestBody<MarketsApi, '/get'>>, res: ResponseWithSession<ResponseBody<MarketsApi, '/get'>>) {
-	await safePayload(res, async () => ({ name: (await Services.getMarketOrThrow(req.body.id)).name }));
+	await safePayload(res, async () => {
+		const { name, currencyId } = await Services.getMarketOrThrow(req.body.id);
+
+		return { name, currencyId };
+	});
 }
 
 export async function create(
