@@ -2,7 +2,9 @@
 	"name": "ecohub-backend",
 	"version": "1.0.0",
 	"main": "dist/server.js",
-	"scripts": {},
+	"scripts": {
+		"dev": "nodemon --exec \"eslint src --ext .ts && rimraf dist && tsc && tsc-alias && node dist/server.js\" --ext ts --watch src"
+	},
 	"author": "",
 	"license": "ISC",
 	"description": "",
